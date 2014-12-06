@@ -1,9 +1,39 @@
 #!/usr/bin/env ruby
+
 require 'super_hooks'
 require 'optparse'
 
-options = {}
-
 OptionParser.new do |opts|
-  opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
+  opts.banner = <<-EOF.gsub(/^\s+/, ' ')
+    Usage: #{File.basename(__FILE__)} [options]
+    A tool to manage project, user, and global Git hooks for multiple git repositories.
+  EOF
+
+  opts.separator ""
+
+  opts.on("--install", "Replace existing hooks in this repository with a call to git hooks run [hook].  Move old hooks directory to hooks.old") do 
+  end
+
+  opts.on("--uninstall", "Remove existing hooks in this repository and rename hooks.old back to hooks") do 
+  end
+
+  opts.on("--install-global", "Create a template .git directory that that will be used whenever a git repository is created or cloned that will remind the user to install git-hooks") do 
+  end
+
+  opts.on("--uninstall-global", "Turn off the global .git directory template that has the reminder") do 
+  end
+
+  opts.on("--run CMD", "run hooks for CMD (such as pre-commit)") do 
+  end
+
+  opts.on("--list", "list current hooks") do 
+  end
+
+  opts.separator ""
+
+  opts.on_tail("-h", "--help", "Print this help message") do 
+    puts opts
+    exit
+  end
+
 end.parse!

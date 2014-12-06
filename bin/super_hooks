@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'super_hooks'
+require 'optparse'
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
+end.parse!

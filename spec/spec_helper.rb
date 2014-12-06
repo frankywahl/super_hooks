@@ -1,4 +1,2 @@
 require 'rspec'
-require 'super_hooks/version'
-
-include SuperHooks
+require 'super_hooks'

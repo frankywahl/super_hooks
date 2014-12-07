@@ -31,6 +31,7 @@ OptionParser.new do |opts|
   end
 
   opts.on("--list", "list current hooks") do 
+    puts SuperHooks::Hooks.new.list
   end
 
   opts.separator ""

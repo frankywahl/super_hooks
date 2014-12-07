@@ -3,6 +3,11 @@
 require 'super_hooks'
 require 'optparse'
 
+if ARGV.empty?
+  puts SuperHooks::Hooks.new.list
+  exit
+end
+
 OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 

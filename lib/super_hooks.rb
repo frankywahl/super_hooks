@@ -9,4 +9,13 @@ require 'pry'
 
 module SuperHooks
   ROOT = Pathname.new(File.dirname(__FILE__) + "/../").expand_path
+
+  class << self
+
+    def installed?
+      `ls .git/hooks.old/ 2>/dev/null`
+      $?.success?
+    end
+
+  end
 end

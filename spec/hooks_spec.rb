@@ -24,4 +24,21 @@ describe SuperHooks::Hooks do
       expect(self.described_class.list).to eql list
     end
   end
+
+  describe "installed hooks" do
+
+    let(:hooks) { self.described_class.new }
+
+    it "includes project hooks" do
+      file = "#{@repository.path}/.git_hooks/commit-msg/foo"
+      dirname = File.dirname(file)
+
+      FileUtils.mkdir_p(dirname) unless File.directory? dirname
+
+      File.new(file, 'w') do |f|
+        f.puts "ok"
+      end
+      expect(hooks.list).to match_array(file)
+    end
+  end
 end

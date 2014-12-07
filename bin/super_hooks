@@ -29,9 +29,7 @@ OptionParser.new do |opts|
   end
 
   opts.on("--run CMD", "run hooks for CMD (such as pre-commit)") do |cmd|
-    puts ARGV 
-    puts 
-    puts cmd
+    SuperHooks::Runner.new(cmd, ARGV).run
   end
 
   opts.on("--list [option]", Array, "list current hooks (for option)") do |options|

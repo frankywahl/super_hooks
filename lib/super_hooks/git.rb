@@ -17,6 +17,7 @@ module SuperHooks
       # Returns a string of the repository name
       # Raises NotARepository if we're not in a git repository
       #
+      alias_method :current_repository,
       def repository
         begin
           git "rev-parse --show-toplevel"

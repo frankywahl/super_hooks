@@ -20,6 +20,9 @@ describe SuperHooks::Runner do
     end
 
     it "returns a bad error code if one script fails" do
+      expect($stderr).to receive(:puts) do |args|
+        expect(args).to include "#{bad_hook} did not exit with a successfull message"
+      end
       expect(SuperHooks::Hooks).to receive(:new).with(filters: "commit-msg").and_return(double("Hooks", list: [bad_hook]))
       begin
         runner.run

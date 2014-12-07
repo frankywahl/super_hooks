@@ -13,14 +13,14 @@ require 'super_hooks/runner'
 require 'pry'
 
 module SuperHooks
+
   ROOT = Pathname.new(File.dirname(__FILE__) + "/../").expand_path
 
-  class << self
-
-    def installed?
-      `ls .git/hooks.old/ 2>/dev/null`
-      $?.success?
-    end
-
+  def self.installed?
+    return false unless Git.repository?
+    hooks_folder = Git.current_repository + "/.git/hooks.old/"
+    ::File.exists?(hooks_folder)
   end
+
+
 end

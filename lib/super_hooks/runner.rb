@@ -22,7 +22,7 @@ module SuperHooks
       hooks.each do |hook|
         `#{hook} #{arguments}`
         unless $?.success?
-          puts "#{hook} did not exit with a successfull message"
+          $stderr.puts "#{hook} did not exit with a successfull message"
           exit 1
         end
       end

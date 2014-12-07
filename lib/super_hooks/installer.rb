@@ -23,6 +23,17 @@ module SuperHooks
       create_new_files
     end
 
+
+    # Uninstall GitHooks
+    #
+    # This will do the following
+    #   * remove the projects .git/git_hooks folder
+    #   * rename the .git/hooks.old/ folder to .git/hooks/
+    #
+    def uninstall
+
+    end
+
     private
     def already_installed?
       ::File.exists?(hook_folder + ".old")

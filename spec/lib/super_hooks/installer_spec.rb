@@ -57,4 +57,8 @@ describe SuperHooks::Installer do
     end
 
   end
+
+  describe "uninstall" do
+
+  end
 end

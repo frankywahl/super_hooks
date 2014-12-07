@@ -48,9 +48,10 @@ module SuperHooks
     end
 
     private
-
     def global_hooks
-      Dir[""]
+      dir = `git config hooks.global`.chomp
+      return [] if dir.empty?
+      Dir["#{dir}**/*"]
     end
 
     def user_hooks

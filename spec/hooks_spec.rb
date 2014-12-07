@@ -26,8 +26,6 @@ describe SuperHooks::Hooks do
   end
 
   describe "installed hooks" do
-
-
     let(:file) {
       file = "#{@repository.path}/.git/git_hooks/commit-msg/foo"
       dirname = File.dirname(file)
@@ -84,7 +82,6 @@ describe SuperHooks::Hooks do
       end
       file
     }
-
 
     before(:each) do
       file

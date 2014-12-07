@@ -24,13 +24,19 @@ module SuperHooks
     # Exit the program with a bad status if any of the hooks fail
     #
     def run
+      failed_hooks = []
       hooks.each do |hook|
         `#{hook} #{arguments}`
         unless $?.success?
-          $stderr.puts "#{hook} did not exit with a successfull message"
-          exit 1
+          failed_hooks << hook #"#{hook} did not exit with a successfull message"
         end
       end
+
+      unless failed_hooks.empty?
+        $stderr.puts "Hooks #{failed_hooks.join(", ")} failed to exit successfully"
+        exit 1
+      end
+
     end
 
   end

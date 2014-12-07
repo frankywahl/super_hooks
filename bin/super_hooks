@@ -12,6 +12,7 @@ OptionParser.new do |opts|
   opts.separator ""
 
   opts.on("--install", "Replace existing hooks in this repository with a call to git hooks run [hook].  Move old hooks directory to hooks.old") do 
+    SuperHooks::Installer.new.run
   end
 
   opts.on("--uninstall", "Remove existing hooks in this repository and rename hooks.old back to hooks") do 
@@ -23,7 +24,10 @@ OptionParser.new do |opts|
   opts.on("--uninstall-global", "Turn off the global .git directory template that has the reminder") do 
   end
 
-  opts.on("--run CMD", "run hooks for CMD (such as pre-commit)") do 
+  opts.on("--run CMD", "run hooks for CMD (such as pre-commit)") do |cmd|
+    puts ARGV 
+    puts 
+    puts cmd
   end
 
   opts.on("--list", "list current hooks") do 

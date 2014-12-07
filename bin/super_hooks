@@ -26,6 +26,8 @@ OptionParser.new do |opts|
   end
 
   opts.on("--uninstall", "Remove existing hooks in this repository and rename hooks.old back to hooks") do 
+    SuperHooks::Installer.new.uninstall
+    exit 0
   end
 
   opts.on("--install-global", "Create a template .git directory that that will be used whenever a git repository is created or cloned that will remind the user to install git-hooks") do 

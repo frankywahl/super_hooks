@@ -1,4 +1,5 @@
 module SuperHooks
+  # Interact with git via this module
   module Git
 
     class NotARepository < StandardError; end # :nodoc:
@@ -17,7 +18,6 @@ module SuperHooks
       # Returns a string of the repository name
       # Raises NotARepository if we're not in a git repository
       #
-      alias_method :current_repository,
       def repository
         begin
           git "rev-parse --show-toplevel"
@@ -25,6 +25,7 @@ module SuperHooks
           raise NotARepository
         end
       end
+      alias_method :current_repository, :repository
 
       # Are we in a git repository
       #

@@ -27,12 +27,20 @@ module SuperHooks
     # Uninstall GitHooks
     #
     # This will do the following
-    #   * remove the projects .git/git_hooks folder
-    #   * rename the .git/hooks.old/ folder to .git/hooks/
+    #
+    # * remove the projects .git/git_hooks folder
+    # * rename the .git/hooks.old/ folder to .git/hooks/
     #
     def uninstall
+      unless already_installed?
+        $stderr.puts "SuperHooks is not installed"
+        exit 1
+      end
 
+      remove_hooks_folder
+      restore_old_folder
     end
+    alias_method :remove, :uninstall
 
     private
     def already_installed?
@@ -56,6 +64,14 @@ module SuperHooks
           f.puts 'exec("super_hooks --run #{File.basename(__FILE__)} #{ARGV}")'
         end
       end
+    end
+
+    def remove_hooks_folder
+      FileUtils.rm_rf(hook_folder + "/")
+    end
+
+    def restore_old_folder
+      FileUtils.mv(hook_folder + ".old/", hook_folder)
     end
 
   end

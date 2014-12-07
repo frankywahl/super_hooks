@@ -5,18 +5,40 @@ describe SuperHooks::Installer do
 
 
   context "already installed" do
+    before(:each) do
+      expect(File).to receive(:exists?).with("#{@repository.path}/.git/hooks.old").and_return(true)
+    end
+
     describe "#run" do
       it "should raise an error" do
-        expect(File).to receive(:exists?).with("#{@repository.path}/.git/hooks.old").and_return(true)
         expect($stderr).to receive(:puts).with("SuperHooks already installed")
         expect{
           installer.run
         }.to raise_error SystemExit
       end
     end
+
+    describe "#uninstalll" do
+
+      before(:each) do
+        `mkdir -p #{@repository.path}/.git/hooks.old/foo`
+      end
+
+      it "removes the new hooks directory" do
+        allow(FileUtils).to receive(:rm_rf).with(anything)
+        expect(FileUtils).to receive(:rm_rf).with("#{@repository.path}/.git/hooks/")
+        installer.uninstall
+      end
+
+      it "renames the old directory to the new directory" do
+        expect(FileUtils).to receive(:mv).with("#{@repository.path}/.git/hooks.old/", "#{@repository.path}/.git/hooks")
+        installer.uninstall
+      end
+
+    end
   end
 
-  context "not installed" do
+  context "with super hooks not installed" do
     context "before running the installer" do
       it "only has the one hooks folder" do
         expect(Dir[".git/hooks"]).to match_array(".git/hooks")
@@ -54,11 +76,20 @@ describe SuperHooks::Installer do
         end
       end
 
+
+    end
+    describe "#uninstall" do
+      it "should raise an error" do
+        expect(File).to receive(:exists?).with("#{@repository.path}/.git/hooks.old").and_return(false)
+        expect($stderr).to receive(:puts).with(anything)
+        begin
+          installer.uninstall
+        rescue SystemExit => e
+          expect(e.status).to eql 1
+        end
+      end
     end
 
   end
 
-  describe "uninstall" do
-
-  end
 end

@@ -1,4 +1,5 @@
 module SuperHooks
+  # Class responsible for running the hooks and reporting on status
   class Runner
 
     attr_reader :hooks, :arguments

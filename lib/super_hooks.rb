@@ -12,10 +12,22 @@ require 'super_hooks/runner'
 
 require 'pry'
 
+
+# A module to interact with git hooks
 module SuperHooks
 
+  # The root pathname
   ROOT = Pathname.new(File.dirname(__FILE__) + "/../").expand_path
 
+
+  # Allows to look if super_hooks is installed
+  #
+  # Example:
+  #
+  #   installed?
+  #   #=> true
+  #
+  # Returns a boolean
   def self.installed?
     return false unless Git.repository?
     hooks_folder = Git.current_repository + "/.git/hooks.old/"

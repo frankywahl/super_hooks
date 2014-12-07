@@ -2,7 +2,11 @@ module SuperHooks
   # Class responsible for running the hooks and reporting on status
   class Runner
 
-    attr_reader :hooks, :arguments
+    # the hooks one would like to run
+    attr_reader :hooks
+
+    # arguments passed by git when running a hook
+    attr_reader :arguments
 
     # Prepare for a new commit runner check
     #

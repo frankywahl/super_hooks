@@ -1,4 +1,5 @@
 module SuperHooks
+  # Class responsible for installing and uninstalling the SuperHooks
   class Installer
 
     class AlreadyInstalledError < StandardError; end # :nodoc:

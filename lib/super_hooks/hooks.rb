@@ -1,4 +1,5 @@
 module SuperHooks
+  # Interface with the list of hooks available
   class Hooks
 
     # An array of existing git hooks
@@ -38,6 +39,7 @@ module SuperHooks
     attr_reader :filters
 
 
+    # The initializer
     #
     # :args: filters
     #

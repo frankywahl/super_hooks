@@ -5,3 +5,7 @@ require 'super_hooks/installer'
 require 'super_hooks/git'
 
 require 'pry'
+
+module SuperHooks
+  ROOT = Pathname.new(File.dirname(__FILE__) + "/../").expand_path
+end

@@ -1,26 +1,40 @@
 # SuperHooks
 
-TODO: Write a gem description
+SuperHooks is a quick way to have hooks apply across multiple projects. 
+
+Hooks are defined at three levels:
+
+  * Global hooks: hooks available everywhere
+  * User hooks: hooks used for your own user
+  * Project hooks: hooks used only for a project
 
 ## Installation
 
-Add this line to your application's Gemfile:
+To install it yourself do:
 
-```ruby
-gem 'super_hooks'
+```bash
+	$ gem install super_hooks
 ```
 
-And then execute:
+Then from any git project you can use
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install super_hooks
+```bash
+	$ super_hooks --install
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Install `super_hooks` into a git repository: 
+
+```bash
+	$ super_hooks --install
+```
+
+You can also send a template directory if you want all future projects to include `super_hooks`
+
+## Getting help: 
+
+	$ super_hooks --help
 
 ## Contributing
 
@@ -37,3 +51,7 @@ Copyright (c) 2014 Franky W.
 
 See LICENSE.txt for details.
 
+
+## Credits
+
+A great thanks to [icefox git-hooks](https://github.com/icefox/git-hooks) which was greatly used for this project and his [blogpost](http://benjamin-meyer.blogspot.com/2010/06/managing-project-user-and-global-git.html)

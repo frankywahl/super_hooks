@@ -1,8 +1,19 @@
 module SuperHooks
   class Installer
 
-    class AlreadyInstalledError < StandardError; end
+    class AlreadyInstalledError < StandardError; end # :nodoc:
 
+
+    # Run the installer
+    #
+    # This will create a copy of the .git/hooks folder to .git/hooks.old
+    # And create new files for future hooks to user SuperHooks
+    #
+    # Examples
+    #
+    #   run
+    #   # => true
+    #
     def run
       if already_installed?
         $stderr.puts "SuperHooks already installed"

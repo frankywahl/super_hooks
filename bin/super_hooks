@@ -4,15 +4,11 @@ require 'super_hooks'
 require 'optparse'
 
 OptionParser.new do |opts|
-  opts.banner = <<-EOF.gsub(/^\s+/, ' ')
-    Usage: #{File.basename(__FILE__)} [options]
+  opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
-    A tool to manage project, user, and global Git hooks for multiple git repositories.
+  opts.separator "\nA tool to manage project, user, and global Git hooks for multiple git repositories.\n"
 
-    Supported hooks are #{SuperHooks::Hooks.list}
-  EOF
-
-  opts.separator ""
+  opts.separator "\nOptions:"
 
   opts.on("--install", "Replace existing hooks in this repository with a call to git hooks run [hook].  Move old hooks directory to hooks.old") do 
     SuperHooks::Installer.new.run
@@ -39,9 +35,11 @@ OptionParser.new do |opts|
 
   opts.separator ""
 
-  opts.on_tail("-h", "--help", "Print this help message") do 
+  opts.on("-h", "--help", "Print this help message") do 
     puts opts
     exit
   end
+
+  opts.separator "\nSupported hooks are #{SuperHooks::Hooks.list.join(", ")}"
 
 end.parse!

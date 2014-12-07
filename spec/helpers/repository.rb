@@ -37,4 +37,27 @@ module Helpers
     end
   end
 
+  class Hook
+    attr_reader :path
+
+    def initialize(file, content)
+      @path = file
+      dirname = File.dirname(path)
+      FileUtils.mkdir_p(dirname) unless File.directory? dirname
+      File.open(path, 'w', 0777) do |f|
+        f.puts content
+      end
+    end
+  end
+
+  class BadHook < Hook
+    def initialize(file)
+      content = <<-EOF.gsub(/^\s+/, '')
+        #!/bin/bash
+        exit 1
+      EOF
+      super(file, content)
+    end
+  end
+
 end

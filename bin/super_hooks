@@ -6,7 +6,10 @@ require 'optparse'
 OptionParser.new do |opts|
   opts.banner = <<-EOF.gsub(/^\s+/, ' ')
     Usage: #{File.basename(__FILE__)} [options]
+
     A tool to manage project, user, and global Git hooks for multiple git repositories.
+
+    Supported hooks are #{SuperHooks::Hooks.list}
   EOF
 
   opts.separator ""
@@ -30,8 +33,8 @@ OptionParser.new do |opts|
     puts cmd
   end
 
-  opts.on("--list", "list current hooks") do 
-    puts SuperHooks::Hooks.new.list
+  opts.on("--list [option]", Array, "list current hooks (for option)") do |options|
+    puts SuperHooks::Hooks.new(filters: options).list
   end
 
   opts.separator ""

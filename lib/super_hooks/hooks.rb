@@ -20,13 +20,24 @@ module SuperHooks
       )
     end
 
+    attr_reader :filters
+
+    def initialize(filters: nil)
+      @filters = [*filters]
+    end
+
     #
     # Returns an array of hooks installed: their path
     #
     #
     def list
       list = user_hooks + global_hooks + project_hooks
-      list.select{|f| File.file? f}
+      list.select!{|f| File.file? f}
+      return list if filters.empty?
+      filters.each do |filter|
+        list.select!{|f| f.include? filter.to_s }
+      end
+      list
     end
 
     def list_with_descriptions

@@ -27,7 +27,6 @@ describe SuperHooks::Hooks do
 
   describe "installed hooks" do
 
-    let(:hooks) { self.described_class.new }
 
     let(:file) {
       file = "#{@repository.path}/.git/git_hooks/commit-msg/foo"
@@ -57,20 +56,72 @@ describe SuperHooks::Hooks do
       end
       file
     }
+    let(:file2) {
+      file = "#{@repository.path}/.git/git_hooks/pre-commit/foo"
+      dirname = File.dirname(file)
+
+      FileUtils.mkdir_p(dirname) unless File.directory? dirname
+
+      content = <<-EOF.gsub(/^\s+/, '')
+        #!/bin/bash
+        function foo() {
+          return
+        }
+        case "${1}" in
+          --about )
+            echo -n "Just a check to see if it all works"
+            ;;
+
+          * )
+            foo "#@"
+            ;;
+        esac
+
+      EOF
+
+      File.open(file, 'w', 0755) do |f|
+        f.puts content
+      end
+      file
+    }
 
 
-    describe "#list_with_description" do
-      it "includes project hooks with their description" do
-        file # just create it
-        expect(hooks.list_with_descriptions).to include("#{file}" => "Just a check to see if it all works")
+    before(:each) do
+      file
+      file2
+    end
+
+    context "unfilterd" do
+
+      let(:hooks) { self.described_class.new }
+
+      describe "#list_with_description" do
+        it "includes project hooks with their description" do
+          expect(hooks.list_with_descriptions).to eql("#{file}" => "Just a check to see if it all works", "#{file2}" => "Just a check to see if it all works")
+        end
+      end
+
+      describe "#list" do
+        it "returns an array of active hooks" do
+          expect(hooks.list).to match_array([file, file2])
+          expect(hooks.list.count).to eql 2
+        end
       end
     end
 
-    describe "#list" do
-      it "returns an array of active hooks" do
-        file
-        expect(hooks.list).to match_array(file)
+    context "filtered" do
+
+      let(:hooks) { self.described_class.new(filters: %w(commit-msg)) }
+
+      it "#list limits the output"  do
+        expect(hooks.list).to match_array([file])
+        expect(hooks.list.count).to eql 1
       end
+
+      it "#list_with_description limits output with their description" do
+        expect(hooks.list_with_descriptions).to eql("#{file}" => "Just a check to see if it all works")
+      end
+
     end
 
   end

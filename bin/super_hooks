@@ -3,10 +3,6 @@
 require 'super_hooks'
 require 'optparse'
 
-if ARGV.empty?
-  puts SuperHooks::Hooks.new.list
-  exit
-end
 
 OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
@@ -33,7 +29,9 @@ OptionParser.new do |opts|
   end
 
   opts.on("--list [option]", Array, "list current hooks (for option)") do |options|
-    puts SuperHooks::Hooks.new(filters: options).list
+    SuperHooks::Hooks.new.list_with_descriptions.each do |hook, description|
+      puts "#{File.basename(hook)}  - #{description}"
+    end
   end
 
   opts.separator ""
@@ -46,3 +44,17 @@ OptionParser.new do |opts|
   opts.separator "\nSupported hooks are #{SuperHooks::Hooks.list.join(", ")}"
 
 end.parse!
+
+unless SuperHooks.installed? 
+  puts "Git hooks is not installed for this repository"
+  exit 1
+end
+
+if ARGV.empty? 
+  puts "Git hooks are installed in this repository" 
+  puts 
+  SuperHooks::Hooks.new.list_with_descriptions.each do |hook, description|
+    puts "#{File.basename(hook)}  - #{description}"
+  end
+  exit
+end

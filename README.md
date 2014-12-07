@@ -36,6 +36,9 @@ You can also send a template directory if you want all future projects to includ
 
 	$ super_hooks --help
 
+## Code Status
+[![Build Status](https://travis-ci.org/frankywahl/super_hooks.svg?branch=master)](https://travis-ci.org/frankywahl/super_hooks)
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/super_hooks/fork )

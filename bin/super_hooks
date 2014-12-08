@@ -23,6 +23,7 @@ OptionParser.new do |opts|
 
   opts.on("--install", "Replace existing hooks in this repository with a call to git hooks run [hook].  Move old hooks directory to hooks.old") do 
     SuperHooks::Installer.new.run
+    exit 0
   end
 
   opts.on("--uninstall", "Remove existing hooks in this repository and rename hooks.old back to hooks") do 
@@ -42,6 +43,7 @@ OptionParser.new do |opts|
 
   opts.on("--list [option]", Array, "list current hooks (for option)") do |options|
     HooksPrinter.run
+    exit 0
   end
 
   opts.separator ""

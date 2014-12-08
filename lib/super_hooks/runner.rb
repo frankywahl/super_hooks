@@ -26,7 +26,7 @@ module SuperHooks
     def run
       failed_hooks = []
       hooks.each do |hook|
-        `#{hook} #{arguments}`
+        system("#{hook} #{arguments}", out: $stdout)
         unless $?.success?
           failed_hooks << hook #"#{hook} did not exit with a successfull message"
         end

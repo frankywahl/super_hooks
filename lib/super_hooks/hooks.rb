@@ -59,7 +59,7 @@ module SuperHooks
     #
     def list
       list = user_hooks + global_hooks + project_hooks
-      list.select!{|f| File.file? f}
+      list.select!{|f| (File.file? f) && (File.stat(f).executable?) }
       return list if filters.empty?
       filters.each do |filter|
         list.select!{|f| f.include? filter.to_s }

@@ -103,6 +103,10 @@ describe SuperHooks::Hooks do
           expect(hooks.list).to match_array([file, file2])
           expect(hooks.list.count).to eql 2
         end
+
+        it "does not include non-executable" do
+
+        end
       end
     end
 

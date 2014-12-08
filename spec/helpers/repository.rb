@@ -31,8 +31,11 @@ module Helpers
       File.open("tmp.txt", 'w') do |f|
         f.puts "text"
       end
+      git_temp_dir = `git config --global init.templatedir`.chomp
+      `git config --global --unset init.templatedir` unless git_temp_dir.empty?
       `git init`
       `git add . && git commit -m "WIP"`
+      `git config --global init.templatedir #{git_temp_dir}` unless git_temp_dir.empty?
       path
     end
   end

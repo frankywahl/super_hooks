@@ -5,6 +5,35 @@ module SuperHooks
     class AlreadyInstalledError < StandardError; end # :nodoc:
 
 
+    # A handler to deal with global hooks
+    class Global
+
+      # Execute the installer
+      def run
+        unless File.exists? template
+          FileUtils.mkdir_p(template + "/hooks/")
+          Hooks.list.each do |hook|
+            file = "#{template}/hooks/#{hook}"
+            File.open(file, 'w', 0755) do |f|
+              f.puts '#!/usr/bin/env bash'
+              f.puts <<-EOF
+                echo "git hooks not installed in this repository.  Run \\`git-hooks --install\\` to install it or \\`git-hooks -h\\` for more information."
+              EOF
+            end
+          end
+
+        end
+
+        Git.command "config --global init.templatedir #{template}"
+      end
+
+      private
+      def template
+        ENV["HOME"] + "/.git_global_templates"
+      end
+    end
+
+
     # Run the installer
     #
     # This will create a copy of the .git/hooks folder to .git/hooks.old

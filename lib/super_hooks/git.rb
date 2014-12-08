@@ -46,7 +46,6 @@ module SuperHooks
         end
       end
 
-      private
       # Run a git command
       #
       # Examples
@@ -61,6 +60,8 @@ module SuperHooks
         raise GitError, "`git #{cmd}` failed" unless $?.success?
         output
       end
+      alias_method :command, :git
+
     end
   end
 end

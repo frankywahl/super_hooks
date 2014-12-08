@@ -8,7 +8,6 @@ RSpec.configure do |c|
 
   c.before(:example) do
     @repository = ::Helpers::GitRepository.new
-
     stub_const('ENV', ENV.to_hash.merge({"HOME" => "/NON/EXISTING/DIRECTORY"}))
   end
 

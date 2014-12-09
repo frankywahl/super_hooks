@@ -5,7 +5,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'super_hooks/core_ext/string'
 require 'super_hooks/version'
-require 'super_hooks/hooks'
+require 'super_hooks/hook'
 require 'super_hooks/installer'
 require 'super_hooks/git'
 require 'super_hooks/runner'
@@ -15,6 +15,10 @@ require 'pry'
 
 # A module to interact with git hooks
 module SuperHooks
+
+  # The binary name
+  # Used for covenience when creating the scripts
+  BINARY_NAME = "super_hooks"
 
   # The root pathname
   ROOT = Pathname.new(File.dirname(__FILE__) + "/../").expand_path

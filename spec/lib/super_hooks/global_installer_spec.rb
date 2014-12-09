@@ -9,6 +9,9 @@ describe SuperHooks::Installer::Global do
 
     before :each do
       stub_const('ENV', ENV.to_hash.merge({"HOME" => home_dir.path}))
+      stub_const("SuperHooks::Hook::LIST", %w(foo))
+
+      allow(SuperHooks::Git).to receive(:command).with(anything).and_return(nil)
     end
 
     after :each do
@@ -23,7 +26,7 @@ describe SuperHooks::Installer::Global do
 
       it "does not create them" do
         expect(FileUtils).to receive(:mkdir_p).never
-        expect(SuperHooks::Hooks).to receive(:list).never
+        expect(File).to receive(:open).never
         expect(SuperHooks::Git).to receive(:command).with("config --global init.templatedir #{ENV["HOME"]}/.git_global_templates")
         runner.run
       end
@@ -37,9 +40,7 @@ describe SuperHooks::Installer::Global do
 
       it "does not create them" do
         expect(FileUtils).to receive(:mkdir_p).once.and_return(double.as_null_object)
-        expect(File).to receive(:open).with(anything, 'w', 0755).and_return(double.as_null_object)
-        expect(SuperHooks::Hooks).to receive(:list).once.and_return(["foo"])
-        expect(SuperHooks::Git).to receive(:command).with("config --global init.templatedir #{ENV["HOME"]}/.git_global_templates")
+        expect(File).to receive(:open).with(anything, 'w', 0755).once.and_return(double.as_null_object)
         runner.run
       end
     end

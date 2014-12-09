@@ -14,7 +14,7 @@ module SuperHooks
     # * arguments: the arguments past to the hook
     #
     def initialize(hook, arguments)
-      @hooks = Hooks.new(filters: hook).list
+      @hooks = Hook.where(kind: [hook])
       @arguments = arguments
     end
 
@@ -26,14 +26,11 @@ module SuperHooks
     def run
       failed_hooks = []
       hooks.each do |hook|
-        system("#{hook} #{arguments}", out: $stdout)
-        unless $?.success?
-          failed_hooks << hook #"#{hook} did not exit with a successfull message"
-        end
+        failed_hooks << hook unless hook.execute!(arguments)
       end
 
       unless failed_hooks.empty?
-        $stderr.puts "Hooks #{failed_hooks.join(", ")} failed to exit successfully"
+        $stderr.puts "Hooks #{failed_hooks.map(&:path).join(", ")} failed to exit successfully"
         exit 1
       end
 

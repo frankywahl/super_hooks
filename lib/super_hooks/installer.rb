@@ -12,12 +12,12 @@ module SuperHooks
       def run
         unless File.exists? template
           FileUtils.mkdir_p(template + "/hooks/")
-          Hooks.list.each do |hook|
+          Hook::LIST.each do |hook|
             file = "#{template}/hooks/#{hook}"
             File.open(file, 'w', 0755) do |f|
-              f.puts '#!/usr/bin/env bash'
-              f.puts <<-EOF
-                echo "git hooks not installed in this repository.  Run \\`git-hooks --install\\` to install it or \\`git-hooks -h\\` for more information."
+              f.puts <<-EOF.strip_heredoc
+                #!/usr/bin/env bash
+                echo "#{BINARY_NAME} not installed in this repository.  Run \\`#{BINARY_NAME} --install\\` to install it or \\`#{BINARY_NAME} -h\\` for more information."
               EOF
             end
           end
@@ -88,7 +88,7 @@ module SuperHooks
     def create_new_files
       Dir.mkdir(hook_folder)
 
-      Hooks.list.each do |hook|
+      Hook::LIST.each do |hook|
         File.open(Git.repository + "/.git/hooks/#{hook}", 'w', 0755) do |f|
           f.puts '#!/usr/bin/env ruby'
           f.puts 'exec("super_hooks --run #{File.basename(__FILE__)} #{ARGV}")'

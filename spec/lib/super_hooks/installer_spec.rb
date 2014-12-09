@@ -56,7 +56,7 @@ describe SuperHooks::Installer do
       end
 
       it "creates a new executable for each of the hooks" do
-        SuperHooks::Hooks.list.each do |hook|
+        SuperHooks::Hook::LIST.each do |hook|
           expect(files.map{|x| File.basename(x)}).to include hook
         end
 

@@ -21,7 +21,9 @@ end
 require 'rake'
 
 require 'rubygems/tasks'
-Gem::Tasks.new
+Gem::Tasks.new do |tasks| 
+  tasks.console.command = 'pry'
+end
 
 require 'rdoc/task'
 RDoc::Task.new do |rdoc|

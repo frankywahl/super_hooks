@@ -7,7 +7,7 @@ module SuperHooks
     # Minor release
     MINOR = 0
     # Patch level
-    PATCH = 0
+    PATCH = 1
 
     # Return the current version of SuperHooks
     # following the semantics versioning
@@ -17,6 +17,6 @@ module SuperHooks
   end
 
   # The current version of SuperHooks
-  VERSION = Version.to_s
+  VERSION = Version.to_s + ".beta"
 
 end

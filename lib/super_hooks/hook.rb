@@ -22,21 +22,11 @@ module SuperHooks
       # Returns an array of Hooks
       #
       def where(name: nil, kind: LIST, level: [:user, :project, :global])
-        hooks = []
-        hooks << Dir["#{ENV['HOME']}/.git_hooks/**/*"] if level.include? :user
-        hooks << Dir["#{Git.repository}/.git/git_hooks/**/*"] if level.include? :project
-        if level.include? :global
-          begin
-            dir = Git.command "config hooks.global"
-            hooks << Dir["#{dir}/**/*"]
-          rescue SuperHooks::Git::GitError
-          end
-        end
+        hooks = level.map{|l| send("#{l}_hooks")}
 
-        hooks.compact!
         hooks.flatten!
 
-        hooks.select!{|f| (File.file? f) && (File.stat(f).executable?) }
+        hooks.select!{|f| is_a_hook? f}
 
         hooks.select!{|hook| hook =~ /#{name}/} unless name.nil?
 
@@ -45,6 +35,28 @@ module SuperHooks
         hooks.map{|hook| new(hook) }
       end
       alias_method :all, :where
+
+      private
+      def user_hooks
+        Dir["#{ENV['HOME']}/.git_hooks/**/*"]
+      end
+
+      def project_hooks
+        Dir["#{Git.repository}/.git/git_hooks/**/*"]
+      end
+
+      def global_hooks
+        begin
+          dir = Git.command "config hooks.global"
+          Dir["#{dir}/**/*"]
+        rescue SuperHooks::Git::GitError
+        []
+        end
+      end
+
+      def is_a_hook?(path)
+        (File.file? path) && (File.stat(path).executable?)
+      end
     end
 
 

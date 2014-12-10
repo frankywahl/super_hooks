@@ -38,9 +38,11 @@ describe SuperHooks::Installer::Global do
         expect(File).to receive(:exists?).with(ENV["HOME"] + "/.git_global_templates").and_return(false)
       end
 
-      it "does not create them" do
+      it "creates them" do
+        file = double("file")
         expect(FileUtils).to receive(:mkdir_p).once.and_return(double.as_null_object)
-        expect(File).to receive(:open).with(anything, 'w', 0755).once.and_return(double.as_null_object)
+        expect(File).to receive(:open).with(anything, 'w', 0755).once.and_yield(file)
+        expect(file).to receive(:puts).with(anything)
         runner.run
       end
     end

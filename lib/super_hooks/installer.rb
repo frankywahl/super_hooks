@@ -9,6 +9,8 @@ module SuperHooks
     class Global
 
       # Execute the installer
+      #
+      # This will create the files needed for SuperHooks to work
       def run
         unless File.exists? template
           FileUtils.mkdir_p(template + "/hooks/")

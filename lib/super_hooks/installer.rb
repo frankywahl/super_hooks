@@ -90,8 +90,9 @@ module SuperHooks
 
       Hook::LIST.each do |hook|
         File.open(Git.repository + "/.git/hooks/#{hook}", 'w', 0755) do |f|
-          f.puts '#!/usr/bin/env ruby'
-          f.puts 'exec("super_hooks --run #{File.basename(__FILE__)} #{ARGV}")'
+          f.puts "#!/usr/bin/env ruby"
+          f.puts "require 'super_hooks'"
+          f.puts "SuperHooks::Runner.new(File.basename(__FILE__), ARGV).run"
         end
       end
     end

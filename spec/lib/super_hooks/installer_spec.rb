@@ -68,7 +68,8 @@ describe SuperHooks::Installer do
       it "each file has the same code" do
         code = <<-EOF.gsub(/^\s+/, '')
           #!/usr/bin/env ruby
-          exec("super_hooks --run \#{File.basename(__FILE__)} \#{ARGV}")
+          require 'super_hooks'
+          SuperHooks::Runner.new(File.basename(__FILE__), ARGV).run
         EOF
 
         files.each do |file|

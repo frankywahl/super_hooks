@@ -1,5 +1,8 @@
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 require 'rspec'
 require 'super_hooks'
+
 Dir["#{File.dirname(__FILE__)}/helpers/**/*.rb"].each { |f| require f }
 require 'pry'
 

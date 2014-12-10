@@ -39,6 +39,7 @@ You can also send a template directory if you want all future projects to includ
 ## Code Status
 [![Build Status](https://travis-ci.org/frankywahl/super_hooks.svg?branch=master)](https://travis-ci.org/frankywahl/super_hooks)
 [![Code Climate](https://codeclimate.com/github/frankywahl/super_hooks/badges/gpa.svg)](https://codeclimate.com/github/frankywahl/super_hooks)
+[![Test Coverage](https://codeclimate.com/github/frankywahl/super_hooks/badges/coverage.svg)](https://codeclimate.com/github/frankywahl/super_hooks)
 
 ## Contributing
 

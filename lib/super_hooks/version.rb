@@ -17,6 +17,6 @@ module SuperHooks
   end
 
   # The current version of SuperHooks
-  VERSION = Version.to_s + ".beta"
+  VERSION = Version.to_s + ".gamma"
 
 end

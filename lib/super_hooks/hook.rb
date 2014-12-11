@@ -22,7 +22,7 @@ module SuperHooks
       # Returns an array of Hooks
       #
       def where(name: nil, kind: LIST, level: [:user, :project, :global])
-        hooks = level.map{|l| send("#{l}_hooks")}
+        hooks = [*level].map{|l| send("#{l}_hooks")}
 
         hooks.flatten!
 

@@ -49,9 +49,11 @@ module SuperHooks
 
       def global_hooks
         begin
-          dir = Git.command "config hooks.global"
-          path = File.join(dir, "**", "*")
-          Dir[path]
+          dirs = Git.command("config hooks.global").split(",")
+          dirs.map{|dir|
+            path = File.join(dir, "**", "*")
+            Dir[path]
+          }
         rescue SuperHooks::Git::GitError
         []
         end

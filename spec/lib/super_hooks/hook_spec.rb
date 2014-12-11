@@ -77,6 +77,15 @@ describe SuperHooks::Hook do
       expect(hooks).to eq([hook])
     end
 
+    it "returns global hooks in multiple folders" do
+      expect(SuperHooks::Git).to receive(:command).with("config hooks.global").and_return("/GLOBAL/HOOK/PATH,/GLOBAL/HOOK/PATH2")
+      expect(Dir).to receive(:[]).with("/GLOBAL/HOOK/PATH/**/*").once.and_return([test_hook])
+      expect(Dir).to receive(:[]).with("/GLOBAL/HOOK/PATH2/**/*").once.and_return([test_hook])
+      expect(self.described_class).to receive(:new).twice.with(anything).and_return(hook)
+      hooks = self.described_class.where
+      expect(hooks).to eq([hook, hook])
+    end
+
     it "does not return non-executable files" do
       allow(file).to receive(:executable?).and_return(false)
       expect(Dir).to receive(:[]).with("#{ENV['HOME']}/.git_hooks/**/*").and_return([test_hook])

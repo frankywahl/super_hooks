@@ -64,10 +64,8 @@ module SuperHooks
       end
     end
 
-
     # The path to the executable
     attr_reader :path
-
 
     # The initializer
     #
@@ -76,7 +74,6 @@ module SuperHooks
     def initialize(path)
       @path = path
     end
-
 
     # Acatully execute the hook
     #
@@ -93,18 +90,16 @@ module SuperHooks
     end
     alias_method :run, :execute!
 
-    # A hash containing a file_name => description
-    #
-    # Example
-    #
-    #   # list_with_descriptions
-    #   # => {
-    #   #     "/home/franky/.git_hooks/commit-msg/sign_off.rb" => "A signoff commit msg",
-    #   #     "/home/franky/.git_hooks/pre-commit/whitespace.rb" => "Checks no unecessary whitespace",
-    #   #    }
+    # Get a short description of the hook
     #
     # It gets the description of the file by running the file name with the --about flag
     #
+    # Example
+    #
+    #   # description
+    #   #   => "A signoff commit msg",
+    #
+    #  Returns a string
     def description
       `#{path} --about`.chomp
     end

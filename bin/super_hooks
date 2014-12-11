@@ -29,23 +29,28 @@ OptionParser.new do |opts|
 
   opts.separator "\nOptions:"
 
-  opts.on("--install", "Replace existing hooks in this repository with a call to git hooks run [hook].  Move old hooks directory to hooks.old") do 
+  opts.on("--install", "Replace existing hooks in this repository with a call to git hooks run [hook]", 
+          "Move old hooks directory to hooks.old") do 
     SuperHooks::Installer.new.run
-    exit 0
+    exit
   end
 
-  opts.on("--uninstall", "Remove existing hooks in this repository and rename hooks.old back to hooks") do 
+  opts.on("--uninstall", "Remove #{SuperHooks::BINARY_NAME}", 
+          "Removes hooks in this repository and rename `hooks.old` back to `hooks`") do 
     SuperHooks::Installer.new.uninstall
-    exit 0
+    exit 
   end
 
-  opts.on("--install-global", "Create a template .git directory that that will be used whenever a git repository is created or cloned that will remind the user to install git-hooks", "This can't be done by default for security reasons") do 
+  opts.on("--install-global", "Create a template .git directory. It will be used whenever a git repository is created or cloned that will remind the user to install #{SuperHooks::BINARY_NAME}",
+          "This can't be done by default for security reasons") do 
     SuperHooks::Installer::Global.new.run
     exit
   end
 
-  opts.on("--uninstall-global", "Turn off the global .git directory template that has the reminder") do 
+  opts.on("--uninstall-global", "Turn off the global .git directory template", 
+          "Those have reminders to install #{SuperHooks::BINARY_NAME}") do 
     `git config --global --unset init.templatedir`.chomp
+    exit 
   end
 
   opts.on("--run CMD", "run hooks for CMD (such as pre-commit)") do |cmd|
@@ -54,10 +59,15 @@ OptionParser.new do |opts|
 
   opts.on("--list [option]", Array, "list current hooks (for option)") do |options|
     HooksPrinter.run
-    exit 0
+    exit 
   end
 
   opts.separator ""
+
+  opts.on("-v", "--version", "Current version of #{SuperHooks::BINARY_NAME}") do 
+    puts "#{SuperHooks::VERSION}"
+    exit 
+  end
 
   opts.on("-h", "--help", "Print this help message") do 
     puts opts

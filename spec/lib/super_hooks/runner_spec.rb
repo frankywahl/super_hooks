@@ -6,11 +6,6 @@ describe SuperHooks::Runner do
 
   let(:runner) { self.described_class.new("commit-msg", "super_argument") }
 
-  let(:bad_hook) {
-    file = "#{@repository.path}/.git/git_hooks/commit-msg/foo"
-    Helpers::BadHook.new(file).path
-  }
-
   before :each do
     allow(SuperHooks::Hook).to receive(:where).and_return([hook])
   end

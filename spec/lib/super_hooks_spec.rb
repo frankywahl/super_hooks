@@ -9,15 +9,21 @@ describe SuperHooks do
   describe "#installed?" do
 
     context "in a git repository" do
+      before(:each) do
+        expect(SuperHooks::Git).to receive(:repository?).and_return true
+        expect(SuperHooks::Git).to receive(:current_repository).and_return("/some/path/")
+      end
+
       context "with a hooks.old folder" do
         it "returns true" do
-          `mkdir -p .git/hooks.old/`
+          expect(File).to receive(:exists?).with("/some/path/.git/hooks.old/").and_return true
           expect(self.described_class.installed?).to be true
         end
       end
 
       context "without a hooks.old folder" do
         it "returns false" do
+          expect(File).to receive(:exists?).with("/some/path/.git/hooks.old/").and_return false
           expect(self.described_class.installed?).to be false
         end
       end
@@ -25,9 +31,8 @@ describe SuperHooks do
 
     context "not in a repository" do
       it "returns false" do
-        repository = ::Helpers::EmptyRepository.new
+        expect(SuperHooks::Git).to receive(:repository?).and_return false
         expect(self.described_class.installed?).to be false
-        repository.remove
       end
     end
   end

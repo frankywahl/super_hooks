@@ -8,43 +8,10 @@ describe SuperHooks::Hook do
     end
   end
 
-  let(:bad_hook) {
-    file = "#{@repository.path}/.git/git_hooks/commit-msg/foo"
-    Helpers::BadHook.new(file).path
-  }
+  let(:good_hook_path) { "/path/.git/git_hooks/commit-msg/foo" }
+  let(:hook) { self.described_class.new(good_hook_path) }
 
-  let(:good_hook) {
-    file = "#{@repository.path}/.git/git_hooks/commit-msg/foo"
-    dirname = File.dirname(file)
-
-    FileUtils.mkdir_p(dirname) unless File.directory? dirname
-
-    content = <<-EOF.gsub(/^\s+/, '')
-        #!/bin/bash
-        function foo() {
-          return
-        }
-        case "${1}" in
-          --about )
-            echo -n "Just a check to see if it all works"
-            ;;
-
-          * )
-            foo "#@"
-            ;;
-        esac
-
-    EOF
-
-    File.open(file, 'w', 0755) do |f|
-      f.puts content
-    end
-    file
-  }
-
-  let(:hook) { self.described_class.new(good_hook) }
-
-  describe "#where" do
+  describe "::where" do
     let(:test_hook) { hook.path }
     let(:file){ double("file") }
 
@@ -63,7 +30,8 @@ describe SuperHooks::Hook do
     end
 
     it "returns project hooks" do
-      expect(Dir).to receive(:[]).with("#{@repository.path}/.git/git_hooks/**/*").and_return([test_hook])
+      expect(SuperHooks::Git).to receive(:repository).and_return("foo")
+      expect(Dir).to receive(:[]).with("foo/.git/git_hooks/**/*").and_return([test_hook])
       expect(self.described_class).to receive(:new).with(anything).and_return(hook)
       hooks = self.described_class.where
       expect(hooks).to eq([hook])
@@ -119,7 +87,8 @@ describe SuperHooks::Hook do
 
   describe "#description" do
     it "run the script with the --about flag" do
-      expect(hook.description).to eql "Just a check to see if it all works"
+      expect(hook).to receive(:`).with("/path/.git/git_hooks/commit-msg/foo --about").and_return("foo\n")
+      expect(hook.description).to eql "foo"
     end
   end
 

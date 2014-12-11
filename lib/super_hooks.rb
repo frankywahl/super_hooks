@@ -14,6 +14,8 @@ require 'pry'
 
 
 # A module to interact with git hooks
+#
+# It is knows if hooks are installed or not
 module SuperHooks
 
   # The binary name
@@ -22,7 +24,6 @@ module SuperHooks
 
   # The root pathname
   ROOT = Pathname.new(File.dirname(__FILE__) + "/../").expand_path
-
 
   # Allows to look if super_hooks is installed
   #
@@ -34,7 +35,7 @@ module SuperHooks
   # Returns a boolean
   def self.installed?
     return false unless Git.repository?
-    hooks_folder = Git.current_repository + "/.git/hooks.old/"
+    hooks_folder = File.join(Git.current_repository, ".git", "hooks.old", "")
     ::File.exists?(hooks_folder)
   end
 

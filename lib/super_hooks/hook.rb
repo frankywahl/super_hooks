@@ -38,17 +38,20 @@ module SuperHooks
 
       private
       def user_hooks
-        Dir["#{ENV['HOME']}/.git_hooks/**/*"]
+        path = File.join(ENV["HOME"], ".git_hooks", "**", "*")
+        Dir[path]
       end
 
       def project_hooks
-        Dir["#{Git.repository}/.git/git_hooks/**/*"]
+        path = File.join(Git.repository, ".git", "git_hooks", "**", "*")
+        Dir[path]
       end
 
       def global_hooks
         begin
           dir = Git.command "config hooks.global"
-          Dir["#{dir}/**/*"]
+          path = File.join(dir, "**", "*")
+          Dir[path]
         rescue SuperHooks::Git::GitError
         []
         end

@@ -26,12 +26,12 @@ describe SuperHooks::Installer do
 
       it "removes the new hooks directory" do
         allow(FileUtils).to receive(:rm_rf).with(anything)
-        expect(FileUtils).to receive(:rm_rf).with("#{@repository.path}/.git/hooks/")
+        expect(FileUtils).to receive(:rm_rf).with("#{@repository.path}/.git/hooks")
         installer.uninstall
       end
 
       it "renames the old directory to the new directory" do
-        expect(FileUtils).to receive(:mv).with("#{@repository.path}/.git/hooks.old/", "#{@repository.path}/.git/hooks")
+        expect(FileUtils).to receive(:mv).with("#{@repository.path}/.git/hooks.old", "#{@repository.path}/.git/hooks")
         installer.uninstall
       end
 

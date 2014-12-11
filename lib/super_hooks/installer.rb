@@ -15,7 +15,7 @@ module SuperHooks
         unless File.exists? template
           FileUtils.mkdir_p(template + "/hooks/")
           Hook::LIST.each do |hook|
-            file = "#{template}/hooks/#{hook}"
+            file = File.join(template, "hooks", hook)
             File.open(file, 'w', 0755) do |f|
               f.puts <<-EOF.strip_heredoc
                 #!/usr/bin/env bash
@@ -84,14 +84,15 @@ module SuperHooks
     end
 
     def hook_folder
-      Git.repository + "/.git/hooks"
+      File.join(Git.repository, ".git" , "hooks")
     end
 
     def create_new_files
       Dir.mkdir(hook_folder)
 
       Hook::LIST.each do |hook|
-        File.open(Git.repository + "/.git/hooks/#{hook}", 'w', 0755) do |f|
+        file = File.join(Git.repository, ".git", "hooks", hook)
+        File.open(file, 'w', 0755) do |f|
           f.puts "#!/usr/bin/env ruby"
           f.puts "require 'super_hooks'"
           f.puts "SuperHooks::Runner.new(File.basename(__FILE__), ARGV).run"
@@ -100,11 +101,11 @@ module SuperHooks
     end
 
     def remove_hooks_folder
-      FileUtils.rm_rf(hook_folder + "/")
+      FileUtils.rm_rf(hook_folder)
     end
 
     def restore_old_folder
-      FileUtils.mv(hook_folder + ".old/", hook_folder)
+      FileUtils.mv(hook_folder + ".old", hook_folder)
     end
 
   end

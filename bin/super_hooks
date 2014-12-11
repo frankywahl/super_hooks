@@ -5,10 +5,18 @@ require 'optparse'
 
 class HooksPrinter
   def self.run
-    SuperHooks::Hook.all.each do |hook|
-      max_length = 50
-      text = hook.path.truncate_at_start(max_length, omission: '...')
-      printf "%-#{max_length}s - %s\n",  text, hook.description 
+    max_length = 80
+    [:project, :user, :global].each do |level| 
+      puts
+      puts "#{level.capitalize} hooks:" 
+      puts "------------------" 
+      SuperHooks::Hook.where(level: level).each do |hook|
+        text = hook.path.truncate_at_start(max_length, omission: '...')
+        description = hook.description.truncate(75)
+        printf "%-#{max_length}s\n", text
+        printf "\t ~> %-#{max_length}s\n", description
+      end
+      puts
     end
   end
 end

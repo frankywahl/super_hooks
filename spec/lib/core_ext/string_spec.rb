@@ -14,6 +14,16 @@ describe String do
     end
   end
 
+  context "#truncat_at" do
+    it "with omission" do
+      expect(long_string.truncate(5, omission: '...', separator: ' ')).to eql "ab..."
+    end
+
+    it "without omission" do
+      expect(long_string.truncate(5)).to eql "ab..."
+    end
+  end
+
   context "#strip_heredoc" do
 
     it "removes the start" do

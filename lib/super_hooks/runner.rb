@@ -21,11 +21,31 @@ module SuperHooks
     #
     # Exit the program with a bad status if any of the hooks fail
     #
-    def run
+    def run(parallel: true)
       failed_hooks = []
-      hooks.each do |hook|
-        failed_hooks << hook unless hook.execute!(arguments)
+
+      interceptors = []
+
+
+      if parallel
+        threads = []
+        hooks.each do |hook|
+          s = StringIO.new
+          interceptors << s
+          threads << Thread.new{
+            Thread.current[:stoud] = s
+            hook.execute!
+        }
+        end
+        threads.each {|t| t.join}
+        binding.pry
+
       end
+
+
+      #hooks.each do |hook|
+      #  failed_hooks << hook unless hook.execute!(arguments)
+      #end
 
       unless failed_hooks.empty?
         $stderr.puts "Hooks #{failed_hooks.map(&:path).join(', ')} failed to exit successfully"

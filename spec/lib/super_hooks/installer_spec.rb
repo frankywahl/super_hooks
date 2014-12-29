@@ -66,10 +66,15 @@ describe SuperHooks::Installer do
       end
 
       it "each file has the same code" do
-        code = <<-EOF.gsub(/^\s+/, '')
+        code = <<-EOF.strip_heredoc
           #!/usr/bin/env ruby
-          require 'super_hooks'
-          SuperHooks::Runner.new(File.basename(__FILE__), ARGV).run
+          begin
+            require 'super_hooks'
+            SuperHooks::Runner.new(File.basename(__FILE__), ARGV).run
+          rescue LoadError
+            puts 'SuperHooks not installed. Please run `gem install super_hooks`'
+            exit 1
+          end
         EOF
 
         files.each do |file|

@@ -16,14 +16,10 @@ module SuperHooks
           FileUtils.mkdir_p(template + "/hooks/")
           Hook::LIST.each do |hook|
             file = File.join(template, "hooks", hook)
-            File.open(file, 'w', 0755) do |f|
-              f.puts <<-EOF.strip_heredoc
-                #!/usr/bin/env bash
-                echo "#{BINARY_NAME} not installed in this repository.  Run \\`#{BINARY_NAME} --install\\` to install it or \\`#{BINARY_NAME} -h\\` for more information."
-              EOF
-            end
+            f = File.new(file, 'w', 0755)
+            f.write ERB.new(File.read(ROOT.join("templates", "global_install_hook.erb"))).result(binding)
+            f.close
           end
-
         end
 
         Git.command "config --global init.templatedir #{template}"
@@ -92,11 +88,7 @@ module SuperHooks
 
       Hook::LIST.each do |hook|
         file = File.join(Git.repository, ".git", "hooks", hook)
-        File.open(file, 'w', 0755) do |f|
-          f.puts "#!/usr/bin/env ruby"
-          f.puts "require 'super_hooks'"
-          f.puts "SuperHooks::Runner.new(File.basename(__FILE__), ARGV).run"
-        end
+        FileUtils.cp(ROOT.join("templates", "hook"), file)
       end
     end
 

@@ -10,8 +10,9 @@ require 'super_hooks/installer'
 require 'super_hooks/git'
 require 'super_hooks/runner'
 
-require 'pry'
-
+require 'pathname'
+require 'fileutils'
+require 'erb'
 
 # A module to interact with git hooks
 #

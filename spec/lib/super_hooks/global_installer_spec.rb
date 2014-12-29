@@ -41,8 +41,9 @@ describe SuperHooks::Installer::Global do
       it "creates them" do
         file = double("file")
         expect(FileUtils).to receive(:mkdir_p).once.and_return(double.as_null_object)
-        expect(File).to receive(:open).with(anything, 'w', 0755).once.and_yield(file)
-        expect(file).to receive(:puts).with(anything)
+        expect(File).to receive(:new).with(anything, 'w', 0755).once.and_return(file)
+        expect(file).to receive(:write).with(anything)
+        expect(file).to receive(:close)
         runner.run
       end
     end

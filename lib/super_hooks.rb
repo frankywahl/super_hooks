@@ -3,12 +3,12 @@
 $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
-require 'super_hooks/core_ext/string'
-require 'super_hooks/version'
-require 'super_hooks/hook'
-require 'super_hooks/installer'
-require 'super_hooks/git'
-require 'super_hooks/runner'
+require 'core_ext/string'
+require 'version'
+require 'hook'
+require 'installer'
+require 'git'
+require 'runner'
 
 require 'pathname'
 require 'fileutils'

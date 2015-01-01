@@ -21,7 +21,7 @@ describe SuperHooks::Installer::Global do
     context "templates already exists" do
 
       before :each do
-        expect(File).to receive(:exists?).with(ENV["HOME"] + "/.git_global_templates").and_return(true)
+        expect(File).to receive(:exist?).with(ENV["HOME"] + "/.git_global_templates").and_return(true)
       end
 
       it "does not create them" do
@@ -35,7 +35,7 @@ describe SuperHooks::Installer::Global do
     context "templates do not exist" do
 
       before :each do
-        expect(File).to receive(:exists?).with(ENV["HOME"] + "/.git_global_templates").and_return(false)
+        expect(File).to receive(:exist?).with(ENV["HOME"] + "/.git_global_templates").and_return(false)
       end
 
       it "creates them" do

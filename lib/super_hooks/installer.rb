@@ -12,7 +12,7 @@ module SuperHooks
       #
       # This will create the files needed for SuperHooks to work
       def run
-        unless File.exists? template
+        unless File.exist? template
           FileUtils.mkdir_p(template + "/hooks/")
           Hook::LIST.each do |hook|
             file = File.join(template, "hooks", hook)
@@ -72,7 +72,7 @@ module SuperHooks
 
     private
     def already_installed?
-      ::File.exists?(hook_folder + ".old")
+      ::File.exist?(hook_folder + ".old")
     end
 
     def copy_to_backup_folder

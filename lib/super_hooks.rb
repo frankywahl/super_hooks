@@ -37,7 +37,7 @@ module SuperHooks
   def self.installed?
     return false unless Git.repository?
     hooks_folder = File.join(Git.current_repository, ".git", "hooks.old", "")
-    ::File.exists?(hooks_folder)
+    File.exist?(hooks_folder)
   end
 
 

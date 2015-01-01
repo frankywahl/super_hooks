@@ -16,14 +16,14 @@ describe SuperHooks do
 
       context "with a hooks.old folder" do
         it "returns true" do
-          expect(File).to receive(:exists?).with("/some/path/.git/hooks.old/").and_return true
+          expect(File).to receive(:exist?).with("/some/path/.git/hooks.old/").and_return true
           expect(self.described_class.installed?).to be true
         end
       end
 
       context "without a hooks.old folder" do
         it "returns false" do
-          expect(File).to receive(:exists?).with("/some/path/.git/hooks.old/").and_return false
+          expect(File).to receive(:exist?).with("/some/path/.git/hooks.old/").and_return false
           expect(self.described_class.installed?).to be false
         end
       end

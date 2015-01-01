@@ -6,7 +6,7 @@ describe SuperHooks::Installer do
 
   context "already installed" do
     before(:each) do
-      expect(File).to receive(:exists?).with("#{@repository.path}/.git/hooks.old").and_return(true)
+      expect(File).to receive(:exist?).with("#{@repository.path}/.git/hooks.old").and_return(true)
     end
 
     describe "#run" do
@@ -86,7 +86,7 @@ describe SuperHooks::Installer do
     end
     describe "#uninstall" do
       it "should raise an error" do
-        expect(File).to receive(:exists?).with("#{@repository.path}/.git/hooks.old").and_return(false)
+        expect(File).to receive(:exist?).with("#{@repository.path}/.git/hooks.old").and_return(false)
         expect($stderr).to receive(:puts).with(anything)
         begin
           installer.uninstall

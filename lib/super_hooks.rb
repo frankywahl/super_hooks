@@ -6,11 +6,13 @@ $LOAD_PATH.unshift(File.dirname(__FILE__)) unless
 
 require "core_ext/string"
 
-require "super_hooks/version"
-require "super_hooks/hook"
-require "super_hooks/installer"
-require "super_hooks/git"
-require "super_hooks/runner"
+require 'super_hooks/version'
+require 'super_hooks/cli'
+require 'super_hooks/hook'
+require 'super_hooks/installer'
+require 'super_hooks/git'
+require 'super_hooks/runner'
+require 'presenters/hook_presenter'
 
 require "pathname"
 require "fileutils"

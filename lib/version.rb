@@ -1,5 +1,4 @@
 module SuperHooks
-
   # A version object
   class Version
     # Major release
@@ -14,11 +13,10 @@ module SuperHooks
     # Return the current version of SuperHooks
     # following the semantics versioning
     def self.to_s
-      [MAJOR, MINOR, PATCH, PRE].compact.join(".")
+      [MAJOR, MINOR, PATCH, PRE].compact.join('.')
     end
   end
 
   # The current version of SuperHooks
   VERSION = Version.to_s
-
 end

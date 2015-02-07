@@ -1,13 +1,11 @@
 module SuperHooks
   # Interact with git via this module
   module Git
-
     class NotARepository < StandardError; end # :nodoc:
 
     class GitError < StandardError; end # :nodoc:
 
     class << self
-
       # Returns the current repository if root path
       #
       # Examples
@@ -19,11 +17,9 @@ module SuperHooks
       # Raises NotARepository if we're not in a git repository
       #
       def repository
-        begin
-          git "rev-parse --show-toplevel"
+        git 'rev-parse --show-toplevel'
         rescue GitError
           raise NotARepository
-        end
       end
       alias_method :current_repository, :repository
 
@@ -38,12 +34,10 @@ module SuperHooks
       # Raises NotARepository if we're not in a git repository
       #
       def repository?
-        begin
-          repository
-          true
+        repository
+        true
         rescue NotARepository
           false
-        end
       end
 
       # Run a git command
@@ -57,11 +51,10 @@ module SuperHooks
       #
       def git(cmd)
         output = `git #{cmd} 2>&1`.chomp
-        raise GitError, "`git #{cmd}` failed" unless $?.success?
+        fail GitError, "`git #{cmd}` failed" unless $?.success?
         output
       end
       alias_method :command, :git
-
     end
   end
 end

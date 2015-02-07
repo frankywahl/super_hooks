@@ -1,7 +1,6 @@
 module SuperHooks
   # Class responsible for running the hooks and reporting on status
   class Runner
-
     # the hooks one would like to run
     attr_reader :hooks
 
@@ -18,7 +17,6 @@ module SuperHooks
       @arguments = arguments
     end
 
-
     # Run all the associated hooks
     #
     # Exit the program with a bad status if any of the hooks fail
@@ -30,11 +28,9 @@ module SuperHooks
       end
 
       unless failed_hooks.empty?
-        $stderr.puts "Hooks #{failed_hooks.map(&:path).join(", ")} failed to exit successfully"
+        $stderr.puts "Hooks #{failed_hooks.map(&:path).join(', ')} failed to exit successfully"
         exit 1
       end
-
     end
-
   end
 end

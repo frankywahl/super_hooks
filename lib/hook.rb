@@ -1,12 +1,11 @@
 module SuperHooks
   # Interface with the list of hooks available
   class Hook
-
     # An array of existing git hooks
-    LIST = %w( applypatch-msg commit-msg post-applypatch post-checkout post-commit post-merge post-receive pre-applypatch pre-auto-gc pre-commit prepare-commit-msg pre-rebase pre-receive update pre-push )
+    LIST = %w( applypatch-msg commit-msg post-applypatch post-checkout post-commit post-merge post-receive
+               pre-applypatch pre-auto-gc pre-commit prepare-commit-msg pre-rebase pre-receive update pre-push )
 
     class << self
-
       # Find a list of hooks by applying the levels to them
       #
       # *name: the name of the path (can be partial)
@@ -22,44 +21,43 @@ module SuperHooks
       # Returns an array of Hooks
       #
       def where(name: nil, kind: LIST, level: [:user, :project, :global])
-        hooks = [*level].map{|l| send("#{l}_hooks")}
+        hooks = [*level].map { |l| send("#{l}_hooks") }
 
         hooks.flatten!
 
-        hooks.select!{|f| is_a_hook? f}
+        hooks.select! { |f| a_hook? f }
 
-        hooks.select!{|hook| hook =~ /#{name}/} unless name.nil?
+        hooks.select! { |hook| hook =~ /#{name}/ } unless name.nil?
 
-        hooks.select!{|hook| [*kind].any?{ |foo| hook =~ /#{foo}/ }}
+        hooks.select! { |hook| [*kind].any? { |foo| hook =~ /#{foo}/ } }
 
-        hooks.map{|hook| new(hook) }
+        hooks.map { |hook| new(hook) }
       end
       alias_method :all, :where
 
       private
+
       def user_hooks
-        path = File.join(ENV["HOME"], ".git_hooks", "**", "*")
+        path = File.join(ENV['HOME'], '.git_hooks', '**', '*')
         Dir[path]
       end
 
       def project_hooks
-        path = File.join(Git.repository, ".git", "git_hooks", "**", "*")
+        path = File.join(Git.repository, '.git', 'git_hooks', '**', '*')
         Dir[path]
       end
 
       def global_hooks
-        begin
-          dirs = Git.command("config hooks.global").split(",")
-          dirs.map{|dir|
-            path = File.join(dir, "**", "*")
-            Dir[path]
-          }
-        rescue SuperHooks::Git::GitError
-        []
+        dirs = Git.command('config hooks.global').split(',')
+        dirs.map do |dir|
+          path = File.join(dir, '**', '*')
+          Dir[path]
         end
+        rescue SuperHooks::Git::GitError
+          []
       end
 
-      def is_a_hook?(path)
+      def a_hook?(path)
         (File.file? path) && (File.stat(path).executable?)
       end
     end
@@ -85,7 +83,7 @@ module SuperHooks
     #   # => true
     #
     #  Returns a boolean indicating if this was a successfull run
-    def execute!(arguments = "")
+    def execute!(arguments = '')
       system("#{path} #{arguments}", out: $stdout, err: $stderr)
     end
     alias_method :run, :execute!
@@ -103,6 +101,5 @@ module SuperHooks
     def description
       `#{path} --about`.chomp
     end
-
   end
 end

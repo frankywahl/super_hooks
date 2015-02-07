@@ -1,4 +1,4 @@
-require "codeclimate-test-reporter"
+require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 require 'rspec'
 require 'super_hooks'
@@ -11,7 +11,7 @@ RSpec.configure do |c|
 
   c.before(:example) do
     @repository = ::Helpers::GitRepository.new
-    stub_const('ENV', ENV.to_hash.merge({"HOME" => "/NON/EXISTING/DIRECTORY"}))
+    stub_const('ENV', ENV.to_hash.merge('HOME' => '/NON/EXISTING/DIRECTORY'))
   end
 
   c.after(:example) do

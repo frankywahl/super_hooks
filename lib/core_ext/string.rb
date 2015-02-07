@@ -43,7 +43,7 @@ class String
                     length_with_room_for_omission
                   end
 
-    "#{omission}#{self.reverse[0, stop].reverse}"
+    "#{omission}#{reverse[0, stop].reverse}"
   end
 
   # Truncates a given +text+ after a given <tt>length</tt> if +text+ is longer than <tt>length</tt>:

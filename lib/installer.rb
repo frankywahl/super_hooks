@@ -1,36 +1,42 @@
 module SuperHooks
   # Class responsible for installing and uninstalling the SuperHooks
   class Installer
-
     class AlreadyInstalledError < StandardError; end # :nodoc:
-
 
     # A handler to deal with global hooks
     class Global
-
       # Execute the installer
       #
       # This will create the files needed for SuperHooks to work
       def run
-        unless File.exist? template
-          FileUtils.mkdir_p(template + "/hooks/")
-          Hook::LIST.each do |hook|
-            file = File.join(template, "hooks", hook)
-            f = File.new(file, 'w', 0755)
-            f.write ERB.new(File.read(ROOT.join("templates", "global_install_hook.erb"))).result(binding)
-            f.close
-          end
-        end
-
-        Git.command "config --global init.templatedir #{template}"
+        create_git_global_template_folder
+        Git.command "config --global init.templatedir #{template_directory}"
       end
 
       private
-      def template
-        ENV["HOME"] + "/.git_global_templates"
+
+      def template_directory
+        ENV['HOME'] + '/.git_global_templates'
+      end
+
+      def create_git_global_template_folder
+        return if File.exist? template_directory
+        FileUtils.mkdir_p(template_directory + '/hooks/')
+        Hook::LIST.each do |hook|
+          file_name = File.join(template_directory, 'hooks', hook)
+          File.open(file_name, 'w', 0755) do |f|
+            f.write(template_file)
+          end
+        end
+      end
+
+      def template_file
+        @template_file ||= begin
+          orig_file = File.read(ROOT.join('templates', 'global_install_hook.erb'))
+          ERB.new(orig_file).result(binding)
+        end
       end
     end
-
 
     # Run the installer
     #
@@ -44,13 +50,12 @@ module SuperHooks
     #
     def run
       if already_installed?
-        $stderr.puts "SuperHooks already installed"
+        $stderr.puts 'SuperHooks already installed'
         exit 1
       end
       copy_to_backup_folder
       create_new_files
     end
-
 
     # Uninstall GitHooks
     #
@@ -61,7 +66,7 @@ module SuperHooks
     #
     def uninstall
       unless already_installed?
-        $stderr.puts "SuperHooks is not installed"
+        $stderr.puts 'SuperHooks is not installed'
         exit 1
       end
 
@@ -71,24 +76,25 @@ module SuperHooks
     alias_method :remove, :uninstall
 
     private
+
     def already_installed?
-      ::File.exist?(hook_folder + ".old")
+      ::File.exist?(hook_folder + '.old')
     end
 
     def copy_to_backup_folder
-      FileUtils.mv(hook_folder, hook_folder + ".old")
+      FileUtils.mv(hook_folder, hook_folder + '.old')
     end
 
     def hook_folder
-      File.join(Git.repository, ".git" , "hooks")
+      File.join(Git.repository, '.git', 'hooks')
     end
 
     def create_new_files
       Dir.mkdir(hook_folder)
 
       Hook::LIST.each do |hook|
-        file = File.join(Git.repository, ".git", "hooks", hook)
-        FileUtils.cp(ROOT.join("templates", "hook"), file)
+        file = File.join(Git.repository, '.git', 'hooks', hook)
+        FileUtils.cp(ROOT.join('templates', 'hook'), file)
       end
     end
 
@@ -97,8 +103,7 @@ module SuperHooks
     end
 
     def restore_old_folder
-      FileUtils.mv(hook_folder + ".old", hook_folder)
+      FileUtils.mv(hook_folder + '.old', hook_folder)
     end
-
   end
 end

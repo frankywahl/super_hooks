@@ -3,14 +3,14 @@
 require File.expand_path('../lib/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name          = "super_hooks"
+  gem.name          = 'super_hooks'
   gem.version       = SuperHooks::VERSION
   gem.summary       = %q{Handle git hooks across your system}
   gem.description   = %q{This allows you to have hooks at a User, Project or Global level}
-  gem.license       = "MIT"
-  gem.authors       = ["Franky W."]
-  gem.email         = "frankywahl@users.noreply.github.com"
-  gem.homepage      = "https://rubygems.org/gems/super_hooks"
+  gem.license       = 'MIT'
+  gem.authors       = ['Franky W.']
+  gem.email         = 'frankywahl@users.noreply.github.com'
+  gem.homepage      = 'https://rubygems.org/gems/super_hooks'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

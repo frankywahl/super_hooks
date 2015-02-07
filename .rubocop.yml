@@ -1,0 +1,25 @@
+AllCops:
+  Exclude:
+    - super_hooks.gemspec 
+
+Documentation:
+  Enabled: false
+
+LineLength:
+  Enabled: true
+  Max: 140
+  Exclude: # Should be fixed and removed  
+    - bin/*
+
+# The remainder of the file should be fixed and removed
+Style/SpecialGlobalVars: 
+  Exclude: 
+    - lib/super_hooks/git.rb
+
+Style/GuardClause:
+  Exclude: 
+    - lib/super_hooks/runner.rb
+
+Metrics/MethodLength:
+  Exclude: 
+    - bin/*

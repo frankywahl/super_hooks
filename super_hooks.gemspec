@@ -20,10 +20,11 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = ">= 2.0"
 
   gem.add_development_dependency 'codeclimate-test-reporter'
-  gem.add_development_dependency 'bundler'
-  gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'pry'
-  gem.add_development_dependency 'rdoc'
-  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'bundler', '~> 1.7'
+  gem.add_development_dependency 'rake', '~> 10.4'
+  gem.add_development_dependency 'pry', '~> 0.10.1'
+  gem.add_development_dependency 'rdoc', '~> 4.2'
+  gem.add_development_dependency 'rspec', '~> 3.0'
+  gem.add_development_dependency 'rubocop', '~> 0.29.0'
   gem.add_development_dependency 'rubygems-tasks', '~> 0.2'
 end

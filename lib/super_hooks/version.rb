@@ -6,9 +6,9 @@ module SuperHooks
     # Minor release
     MINOR = 0
     # Patch level
-    PATCH = 1
+    PATCH = 2
     # Preview
-    PRE = nil
+    PRE = 1
 
     # Return the current version of SuperHooks
     # following the semantics versioning

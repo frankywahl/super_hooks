@@ -1,6 +1,6 @@
 # SuperHooks
 
-***SuperHooks*** is a quick way to have hooks apply across multiple projects. 
+***SuperHooks*** is a quick way to have hooks apply across multiple projects.
 It allows you to decouple the hooks you use from the projects you use them in by pacing the hooks into seperate folders.
 
 Hooks are defined at three levels:
@@ -27,19 +27,19 @@ Then from any git project you can use:
 
 ## Usage
 
-Install `super_hooks` into a git repository: 
+Install `super_hooks` into a git repository:
 
 ```bash
 	$ super_hooks --install
 ```
 
-List the current hooks: 
+List the current hooks:
 
-``` bash 
-	$ super_hooks 
+``` bash
+	$ super_hooks
 ```
 
-See the other options with: 
+See the other options with:
 
 ```bash
 	$ super_hooks --help
@@ -55,15 +55,21 @@ See the other options with:
 | ***Project Hooks*** | installed in your projects `.git/git_hooks/` folder |
 | ***Global Hooks***  | indicated by your `hooks.global` configuration      |
 
-Note: You can have multiple `hooks.global` configurations by either: 
 
-	1. adding them with the command: `git config --add hooks.global </path/to/hooks/directory>
-	2. adding the paths in a comma seperated value way
+The way most people work is to have a single folder with all hooks for them.
+
+	$ `git config --global hooks.global `pwd``
+
+
+Note: You can have multiple `hooks.global` configurations by either:
+
+	1. adding them with the command: `git config --add hooks.global </path/to/hooks/directory>`
+	2. adding the paths in a comma separated value way
 
 #### Examples
 
 Once `super_hooks` is installed, you can easily create hooks by placing executables files (`chmod 755`) under a folder with the hook name.
-For example, if you were to create a pre-commit hook for your user, you would do the following: 
+For example, if you were to create a pre-commit hook for your user, you would do the following:
 
 ```bash
 	$ mkdir -p ~/.git_hooks/pre-commit/
@@ -78,7 +84,7 @@ Example: I have [my own hooks](https://github.com/frankywahl/git_hooks) which I 
 ```bash
 	$ git clone git@github.com:frankywahl/git_hooks.git somewhere
 	$ cd somewhere
-	$ git config --global hooks.config `pwd`
+	$ git config --global hooks.global `pwd`
 ```
 
 ## Code Status

@@ -1,6 +1,11 @@
 language: ruby
-rvm: 
+rvm:
   - "2.0"
   - "2.1"
   - "2.2"
-script: bundle install && CODECLIMATE_REPO_TOKEN=0389aaa864385835affa18a2ee2fc3ac5fff9a0c5f20766cae71e40191f3b1e2 bundle exec rake
+before_install:
+  - gem update bundler
+install: bundle install
+env:
+  - CODECLIMATE_REPO_TOKEN=0389aaa864385835affa18a2ee2fc3ac5fff9a0c5f20766cae71e40191f3b1e2
+script: bundle exec rake

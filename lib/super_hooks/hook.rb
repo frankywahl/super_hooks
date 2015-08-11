@@ -53,8 +53,8 @@ module SuperHooks
           path = File.join(dir, '**', '*')
           Dir[path]
         end
-        rescue SuperHooks::Git::GitError
-          []
+      rescue SuperHooks::Git::GitError
+        []
       end
 
       def a_hook?(path)

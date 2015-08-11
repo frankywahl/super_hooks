@@ -18,8 +18,8 @@ module SuperHooks
       #
       def repository
         git 'rev-parse --show-toplevel'
-        rescue GitError
-          raise NotARepository
+      rescue GitError
+        raise NotARepository
       end
       alias_method :current_repository, :repository
 
@@ -36,8 +36,8 @@ module SuperHooks
       def repository?
         repository
         true
-        rescue NotARepository
-          false
+      rescue NotARepository
+        false
       end
 
       # Run a git command

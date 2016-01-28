@@ -3,7 +3,7 @@ module SuperHooks
   class Hook
     # An array of existing git hooks
     LIST = %w( applypatch-msg commit-msg post-applypatch post-checkout post-commit post-merge post-receive
-               pre-applypatch pre-auto-gc pre-commit prepare-commit-msg pre-rebase pre-receive update pre-push )
+               pre-applypatch pre-auto-gc pre-commit prepare-commit-msg pre-rebase pre-receive update pre-push ).freeze
 
     class << self
       # Find a list of hooks by applying the levels to them
@@ -58,7 +58,7 @@ module SuperHooks
       end
 
       def a_hook?(path)
-        (File.file? path) && (File.stat(path).executable?)
+        (File.file? path) && File.stat(path).executable?
       end
     end
 

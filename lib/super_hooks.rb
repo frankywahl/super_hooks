@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Add the directory containing this file to the start of the load path if it
 # isn't there already.
 $LOAD_PATH.unshift(File.dirname(__FILE__)) unless
@@ -21,7 +22,7 @@ require 'erb'
 module SuperHooks
   # The binary name
   # Used for covenience when creating the scripts
-  BINARY_NAME = 'super_hooks'
+  BINARY_NAME = 'super_hooks'.freeze
 
   # The root pathname
   ROOT = Pathname.new(File.dirname(__FILE__) + '/../').expand_path

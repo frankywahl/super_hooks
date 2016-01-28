@@ -64,7 +64,7 @@ OptionParser.new do |opts|
   opts.separator ''
 
   opts.on('-v', '--version', "Current version of #{SuperHooks::BINARY_NAME}") do
-    puts "#{SuperHooks::VERSION}"
+    puts SuperHooks::VERSION.to_s
     exit
   end
 

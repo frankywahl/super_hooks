@@ -51,7 +51,7 @@ module SuperHooks
       #
       def git(cmd)
         output = `git #{cmd} 2>&1`.chomp
-        fail GitError, "`git #{cmd}` failed" unless $?.success?
+        raise GitError, "`git #{cmd}` failed" unless $?.success?
         output
       end
       alias_method :command, :git

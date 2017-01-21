@@ -4,9 +4,17 @@ rvm:
   - "2.1"
   - "2.2"
   - "2.3.0"
+
 before_install:
   - gem update bundler
+
 install: bundle install
-env:
-  - CODECLIMATE_REPO_TOKEN=0389aaa864385835affa18a2ee2fc3ac5fff9a0c5f20766cae71e40191f3b1e2
+
+addons:
+  code_climate:
+    repo_token: 0389aaa864385835affa18a2ee2fc3ac5fff9a0c5f20766cae71e40191f3b1e2
+
+after_success:
+  - bundle exec codeclimate-test-reporter
+
 script: bundle exec rake

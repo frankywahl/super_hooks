@@ -2,13 +2,13 @@ require 'spec_helper'
 require 'super_hooks'
 
 describe SuperHooks do
-  it 'should have a VERSION constant' do
+  it 'has a VERSION constant' do
     expect(subject.const_get('VERSION')).not_to be_empty
   end
 
   describe '#installed?' do
     context 'in a git repository' do
-      before(:each) do
+      before do
         expect(SuperHooks::Git).to receive(:repository?).and_return true
         expect(SuperHooks::Git).to receive(:current_repository).and_return('/some/path/')
       end

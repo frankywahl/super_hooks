@@ -24,7 +24,7 @@ module SuperHooks
         FileUtils.mkdir_p(template_directory + '/hooks/')
         Hook::LIST.each do |hook|
           file_name = File.join(template_directory, 'hooks', hook)
-          File.open(file_name, 'w', 0755) do |f|
+          File.open(file_name, 'w', 0o755) do |f|
             f.write(template_file)
           end
         end

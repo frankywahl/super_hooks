@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 AllCops:
   Exclude:
     - super_hooks.gemspec
@@ -26,3 +28,58 @@ Style/GuardClause:
 Metrics/MethodLength:
   Exclude:
     - bin/*
+
+# Offense count: 11
+# Configuration parameters: CountComments, ExcludedMethods.
+Metrics/BlockLength:
+  Max: 78
+
+# Offense count: 6
+# Configuration parameters: Max.
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/lib/core_ext/string_spec.rb'
+    - 'spec/lib/super_hooks/hook_spec.rb'
+    - 'spec/lib/super_hooks/installer_spec.rb'
+    - 'spec/lib/super_hooks/runner_spec.rb'
+
+# Offense count: 1
+# Configuration parameters: CustomTransform, IgnoreMethods.
+RSpec/FilePath:
+  Exclude:
+    - 'spec/lib/super_hooks/global_installer_spec.rb'
+
+# Offense count: 6
+# Configuration parameters: AssignmentOnly.
+RSpec/InstanceVariable:
+  Exclude:
+    - 'spec/lib/super_hooks/installer_spec.rb'
+
+# Offense count: 41
+# Configuration parameters: SupportedStyles.
+# SupportedStyles: have_received, receive
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+# Offense count: 17
+RSpec/MultipleExpectations:
+  Max: 5
+
+# Offense count: 1
+RSpec/NamedSubject:
+  Exclude:
+    - 'spec/lib/super_hooks_spec.rb'
+
+# Offense count: 2
+# Configuration parameters: Max.
+RSpec/NestedGroups:
+  Exclude:
+    - 'spec/lib/super_hooks_spec.rb'
+
+# Offense count: 3
+# Configuration parameters: IgnoreSymbolicNames.
+RSpec/VerifiedDoubles:
+  Exclude:
+    - 'spec/lib/super_hooks/global_installer_spec.rb'
+    - 'spec/lib/super_hooks/hook_spec.rb'
+    - 'spec/lib/super_hooks/runner_spec.rb'

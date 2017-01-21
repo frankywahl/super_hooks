@@ -16,7 +16,7 @@ describe SuperHooks::Hook do
     let(:test_hook) { hook.path }
     let(:file) { double('file') }
 
-    before :each do
+    before do
       allow(file).to receive(:executable?).and_return(true)
       allow(Dir).to receive(:[]).with(anything).and_return([])
       allow(File).to receive(:file?).with(anything).and_return true

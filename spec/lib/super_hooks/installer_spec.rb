@@ -4,12 +4,12 @@ describe SuperHooks::Installer do
   let(:installer) { described_class.new }
 
   context 'already installed' do
-    before(:each) do
+    before do
       expect(File).to receive(:exist?).with("#{@repository.path}/.git/hooks.old").and_return(true)
     end
 
     describe '#run' do
-      it 'should raise an error' do
+      it 'raises an error' do
         expect($stderr).to receive(:puts).with('SuperHooks already installed')
         expect do
           installer.run
@@ -18,7 +18,7 @@ describe SuperHooks::Installer do
     end
 
     describe '#uninstalll' do
-      before(:each) do
+      before do
         `mkdir -p #{@repository.path}/.git/hooks.old/foo`
       end
 
@@ -44,7 +44,7 @@ describe SuperHooks::Installer do
 
     context 'after running the installer' do
       let(:files) { Dir['.git/hooks/*'].map { |x| File.expand_path x } }
-      before(:each) do
+      before do
         installer.run
       end
 
@@ -81,13 +81,13 @@ describe SuperHooks::Installer do
     end
 
     describe '#uninstall' do
-      it 'should raise an error' do
+      it 'raises an error' do
         expect(File).to receive(:exist?).with("#{@repository.path}/.git/hooks.old").and_return(false)
         expect($stderr).to receive(:puts).with(anything)
         begin
           installer.uninstall
         rescue SystemExit => e
-          expect(e.status).to eql 1
+          expect(e.status).to be 1
         end
       end
     end

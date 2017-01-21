@@ -45,7 +45,7 @@ module Helpers
       @path = file
       dirname = File.dirname(path)
       FileUtils.mkdir_p(dirname) unless File.directory? dirname
-      File.open(path, 'w', 0777) do |f|
+      File.open(path, 'w', 0o777) do |f|
         f.puts content
       end
     end

@@ -4,7 +4,7 @@ describe SuperHooks::Runner do
   let(:hook) { double('hook') }
   let(:runner) { described_class.new('commit-msg', 'super_argument') }
 
-  before :each do
+  before do
     allow(SuperHooks::Hook).to receive(:where).and_return([hook])
   end
 
@@ -34,7 +34,7 @@ describe SuperHooks::Runner do
       begin
         runner.run
       rescue SystemExit => e
-        expect(e.status).to eql 1
+        expect(e.status).to be 1
       end
     end
   end

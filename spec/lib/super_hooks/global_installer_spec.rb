@@ -5,19 +5,19 @@ describe SuperHooks::Installer::Global do
     let(:runner) { described_class.new }
     let(:home_dir) { Helpers::EmptyRepository.new(name: 'foo_test') }
 
-    before :each do
+    before do
       stub_const('ENV', ENV.to_hash.merge('HOME' => home_dir.path))
       stub_const('SuperHooks::Hook::LIST', %w(foo))
 
       allow(SuperHooks::Git).to receive(:command).with(anything).and_return(nil)
     end
 
-    after :each do
+    after do
       home_dir.remove
     end
 
     context 'templates already exists' do
-      before :each do
+      before do
         expect(File).to receive(:exist?).with("#{ENV['HOME']}/.git_global_templates").and_return(true)
       end
 
@@ -30,14 +30,14 @@ describe SuperHooks::Installer::Global do
     end
 
     context 'templates do not exist' do
-      before :each do
+      before do
         expect(File).to receive(:exist?).with("#{ENV['HOME']}/.git_global_templates").and_return(false)
       end
 
       it 'creates them' do
         file = double('file')
         expect(FileUtils).to receive(:mkdir_p).once.and_return(double.as_null_object)
-        expect(File).to receive(:open).with("#{ENV['HOME']}/.git_global_templates/hooks/foo", 'w', 0755).once.and_yield(file)
+        expect(File).to receive(:open).with("#{ENV['HOME']}/.git_global_templates/hooks/foo", 'w', 0o755).once.and_yield(file)
         expect(file).to receive(:write).with(anything)
         runner.run
       end

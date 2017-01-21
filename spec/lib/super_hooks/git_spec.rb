@@ -14,7 +14,7 @@ describe SuperHooks::Git do
   end
 
   context 'not in a repository' do
-    before(:each) do
+    before do
       expect(git).to receive(:`).with('git rev-parse --show-toplevel 2>&1').and_raise SuperHooks::Git::GitError
     end
     describe '#repository' do

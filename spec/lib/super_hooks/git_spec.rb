@@ -6,7 +6,7 @@ describe SuperHooks::Git do
   context "in a git repository" do
     describe "#repository" do
       it "returns the current repository path" do
-        expect(git.repository?).to be true
+        expect(git).to be_repository
         expect(git).to receive(:`).with("git rev-parse --show-toplevel 2>&1").and_return "/top/level/git/folder"
         expect(git.repository).to eql "/top/level/git/folder"
       end
@@ -25,7 +25,7 @@ describe SuperHooks::Git do
 
     describe "#repository?" do
       it "is false" do
-        expect(git.repository?).to be false
+        expect(git).not_to be_repository
       end
     end
   end

@@ -3,7 +3,7 @@ require "super_hooks"
 
 describe SuperHooks do
   it "has a VERSION constant" do
-    expect(subject.const_get("VERSION")).not_to be_empty
+    expect(described_class.const_get("VERSION")).not_to be_empty
   end
 
   describe "#installed?" do
@@ -16,14 +16,14 @@ describe SuperHooks do
       context "with a hooks.old folder" do
         it "returns true" do
           expect(File).to receive(:exist?).with("/some/path/.git/hooks.old/").and_return true
-          expect(described_class.installed?).to be true
+          expect(described_class).to be_installed
         end
       end
 
       context "without a hooks.old folder" do
         it "returns false" do
           expect(File).to receive(:exist?).with("/some/path/.git/hooks.old/").and_return false
-          expect(described_class.installed?).to be false
+          expect(described_class).not_to be_installed
         end
       end
     end
@@ -31,7 +31,7 @@ describe SuperHooks do
     context "not in a repository" do
       it "returns false" do
         expect(SuperHooks::Git).to receive(:repository?).and_return false
-        expect(described_class.installed?).to be false
+        expect(described_class).not_to be_installed
       end
     end
   end

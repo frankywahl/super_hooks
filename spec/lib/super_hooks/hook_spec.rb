@@ -14,13 +14,14 @@ describe SuperHooks::Hook do
 
   describe "::where" do
     let(:test_hook) { hook.path }
-    let(:file) { double("file") }
+    let(:file) { instance_double("File") }
+    let(:file_stat) { instance_double("File::Stat") }
 
     before do
-      allow(file).to receive(:executable?).and_return(true)
+      allow(file_stat).to receive(:executable?).and_return(true)
       allow(Dir).to receive(:[]).with(anything).and_return([])
       allow(File).to receive(:file?).with(anything).and_return true
-      allow(File).to receive(:stat).with(anything).and_return(file)
+      allow(File).to receive(:stat).with(anything).and_return(file_stat)
     end
 
     it "returns user hooks" do
@@ -56,7 +57,7 @@ describe SuperHooks::Hook do
     end
 
     it "does not return non-executable files" do
-      allow(file).to receive(:executable?).and_return(false)
+      allow(file_stat).to receive(:executable?).and_return(false)
       expect(Dir).to receive(:[]).with("#{ENV['HOME']}/.git_hooks/**/*").and_return([test_hook])
       hooks = described_class.where
       expect(hooks).to eq([])

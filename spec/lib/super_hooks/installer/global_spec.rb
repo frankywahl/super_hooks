@@ -35,7 +35,7 @@ describe SuperHooks::Installer::Global do
       end
 
       it "creates them" do
-        file = double("file")
+        file = instance_double("File")
         expect(FileUtils).to receive(:mkdir_p).once.and_return(double.as_null_object)
         expect(File).to receive(:open).with("#{ENV['HOME']}/.git_global_templates/hooks/foo", "w", 0o755).once.and_yield(file)
         expect(file).to receive(:write).with(anything)

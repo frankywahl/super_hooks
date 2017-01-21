@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe SuperHooks::Runner do
-  let(:hook) { double("hook") }
+  let(:hook) { instance_double("SuperHook::Hook") }
   let(:runner) { described_class.new("commit-msg", "super_argument") }
 
   before do

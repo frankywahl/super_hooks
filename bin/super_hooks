@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'super_hooks'
-require 'optparse'
+require "super_hooks"
+require "optparse"
 
 class HooksPrinter
   def self.run
@@ -9,9 +9,9 @@ class HooksPrinter
     [:project, :user, :global].each do |level|
       puts
       puts "#{level.capitalize} hooks:"
-      puts '------------------'
+      puts "------------------"
       SuperHooks::Hook.where(level: level).each do |hook|
-        text = hook.path.truncate_at_start(max_length, omission: '...')
+        text = hook.path.truncate_at_start(max_length, omission: "...")
         description = hook.description.truncate(75)
         printf "%-#{max_length}s\n", text
         printf "\t ~> %-#{max_length}s\n", description
@@ -28,47 +28,47 @@ OptionParser.new do |opts|
 
   opts.separator "\nOptions:"
 
-  opts.on('--install', 'Replace existing hooks in this repository with a call to git hooks run [hook]',
-          'Move old hooks directory to hooks.old') do
+  opts.on("--install", "Replace existing hooks in this repository with a call to git hooks run [hook]",
+          "Move old hooks directory to hooks.old") do
     SuperHooks::Installer.new.run
     exit
   end
 
-  opts.on('--uninstall', "Remove #{SuperHooks::BINARY_NAME}",
-          'Removes hooks in this repository and rename `hooks.old` back to `hooks`') do
+  opts.on("--uninstall", "Remove #{SuperHooks::BINARY_NAME}",
+          "Removes hooks in this repository and rename `hooks.old` back to `hooks`") do
     SuperHooks::Installer.new.uninstall
     exit
   end
 
-  opts.on('--install-global', "Create a template .git directory. It will be used whenever a git repository is created or cloned that will remind the user to install #{SuperHooks::BINARY_NAME}",
+  opts.on("--install-global", "Create a template .git directory. It will be used whenever a git repository is created or cloned that will remind the user to install #{SuperHooks::BINARY_NAME}",
           "This can't be done by default for security reasons") do
     SuperHooks::Installer::Global.new.run
     exit
   end
 
-  opts.on('--uninstall-global', 'Turn off the global .git directory template',
+  opts.on("--uninstall-global", "Turn off the global .git directory template",
           "Those have reminders to install #{SuperHooks::BINARY_NAME}") do
     `git config --global --unset init.templatedir`.chomp
     exit
   end
 
-  opts.on('--run CMD', 'run hooks for CMD (such as pre-commit)') do |cmd|
+  opts.on("--run CMD", "run hooks for CMD (such as pre-commit)") do |cmd|
     SuperHooks::Runner.new(cmd, ARGV).run
   end
 
-  opts.on('--list [option]', Array, 'list current hooks (for option)') do |_options|
+  opts.on("--list [option]", Array, "list current hooks (for option)") do |_options|
     HooksPrinter.run
     exit
   end
 
-  opts.separator ''
+  opts.separator ""
 
-  opts.on('-v', '--version', "Current version of #{SuperHooks::BINARY_NAME}") do
+  opts.on("-v", "--version", "Current version of #{SuperHooks::BINARY_NAME}") do
     puts SuperHooks::VERSION.to_s
     exit
   end
 
-  opts.on('-h', '--help', 'Print this help message') do
+  opts.on("-h", "--help", "Print this help message") do
     puts opts
     exit
   end
@@ -77,12 +77,12 @@ OptionParser.new do |opts|
 end.parse!
 
 unless SuperHooks.installed?
-  puts 'Git hooks is not installed for this repository'
+  puts "Git hooks is not installed for this repository"
   exit 1
 end
 
 if ARGV.empty?
-  puts 'Git hooks are installed in this repository'
+  puts "Git hooks are installed in this repository"
   puts
   HooksPrinter.run
   exit

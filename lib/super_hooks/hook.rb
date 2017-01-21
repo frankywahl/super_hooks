@@ -38,19 +38,19 @@ module SuperHooks
       private
 
       def user_hooks
-        path = File.join(ENV['HOME'], '.git_hooks', '**', '*')
+        path = File.join(ENV["HOME"], ".git_hooks", "**", "*")
         Dir[path]
       end
 
       def project_hooks
-        path = File.join(Git.repository, '.git', 'git_hooks', '**', '*')
+        path = File.join(Git.repository, ".git", "git_hooks", "**", "*")
         Dir[path]
       end
 
       def global_hooks
-        dirs = Git.command('config hooks.global').split(',')
+        dirs = Git.command("config hooks.global").split(",")
         dirs.map do |dir|
-          path = File.join(dir, '**', '*')
+          path = File.join(dir, "**", "*")
           Dir[path]
         end
       rescue SuperHooks::Git::GitError
@@ -83,7 +83,7 @@ module SuperHooks
     #   # => true
     #
     #  Returns a boolean indicating if this was a successfull run
-    def execute!(arguments = '')
+    def execute!(arguments = "")
       system("#{path} #{arguments}", out: $stdout, err: $stderr)
     end
     alias_method :run, :execute!

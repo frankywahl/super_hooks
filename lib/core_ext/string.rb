@@ -20,7 +20,7 @@ class String
   # that amount of leading whitespace.
   def strip_heredoc
     indent = scan(/^[ \t]*(?=\S)/).min.size || 0
-    gsub(/^[ \t]{#{indent}}/, '')
+    gsub(/^[ \t]{#{indent}}/, "")
   end
 
   # Strips out the first characters in a string
@@ -35,7 +35,7 @@ class String
   def truncate_at_start(truncate_at, options = {})
     return dup unless length > truncate_at
 
-    omission = options[:omission] || '...'
+    omission = options[:omission] || "..."
     length_with_room_for_omission = truncate_at - omission.length
     stop = if options[:separator]
              rindex(options[:separator], length_with_room_for_omission) || length_with_room_for_omission
@@ -67,7 +67,7 @@ class String
   def truncate(truncate_at, options = {})
     return dup unless length > truncate_at
 
-    omission = options[:omission] || '...'
+    omission = options[:omission] || "..."
     length_with_room_for_omission = truncate_at - omission.length
     stop = \
       if options[:separator]

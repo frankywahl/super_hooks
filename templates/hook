@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 begin
-  require 'super_hooks'
+  require "super_hooks"
   SuperHooks::Runner.new(File.basename(__FILE__), ARGV).run
 rescue LoadError
-  puts 'SuperHooks not installed. Please run `gem install super_hooks`'
+  puts "SuperHooks not installed. Please run `gem install super_hooks`"
   exit 1
 end

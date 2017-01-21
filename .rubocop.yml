@@ -4,6 +4,9 @@ AllCops:
   Exclude:
     - super_hooks.gemspec
 
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
 Documentation:
   Enabled: false
 

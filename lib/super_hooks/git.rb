@@ -17,7 +17,7 @@ module SuperHooks
       # Raises NotARepository if we're not in a git repository
       #
       def repository
-        git 'rev-parse --show-toplevel'
+        git "rev-parse --show-toplevel"
       rescue GitError
         raise NotARepository
       end

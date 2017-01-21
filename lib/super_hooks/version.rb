@@ -13,7 +13,7 @@ module SuperHooks
     # Return the current version of SuperHooks
     # following the semantics versioning
     def self.to_s
-      [MAJOR, MINOR, PATCH, PRE].compact.join('.')
+      [MAJOR, MINOR, PATCH, PRE].compact.join(".")
     end
   end
 

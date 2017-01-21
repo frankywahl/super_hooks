@@ -1,5 +1,13 @@
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
+require 'simplecov'
+require 'simplecov-console'
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+                                                                 SimpleCov::Formatter::HTMLFormatter,
+                                                                 SimpleCov::Formatter::Console
+                                                               ])
+SimpleCov.start do
+  minimum_coverage 100
+  add_filter 'spec'
+end
 require 'rspec'
 require 'super_hooks'
 

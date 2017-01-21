@@ -19,6 +19,8 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = ">= 2.0"
 
+  gem.add_development_dependency 'simplecov'
+  gem.add_development_dependency 'simplecov-console'
   gem.add_development_dependency 'codeclimate-test-reporter'
   gem.add_development_dependency 'bundler', '~> 1.7'
   gem.add_development_dependency 'rake', '~> 10.4'

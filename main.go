@@ -11,6 +11,7 @@ import (
 
 	"github.com/frankywahl/super_hooks/git"
 	"github.com/frankywahl/super_hooks/hook"
+	"github.com/frankywahl/super_hooks/version"
 )
 
 func main() {
@@ -24,6 +25,7 @@ func main() {
 	fileToRun := flag.String("run", path.Base(file), "run hooks for CMD (such as pre-commit)")
 	list := flag.Bool("list", false, "list current hooks (for option)")
 	help := flag.Bool("help", false, "display the help")
+	currentVersion := flag.Bool("version", false, "display the git revision this was build off")
 
 	flag.Parse()
 
@@ -36,6 +38,11 @@ func main() {
 			fmt.Fprintf(os.Stderr, "%s ", h.Name)
 		}
 		fmt.Fprintf(os.Stderr, "\n")
+		return
+	}
+
+	if *currentVersion {
+		fmt.Fprintf(os.Stderr, "%s\n", version.GitRevision)
 		return
 	}
 

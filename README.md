@@ -13,16 +13,17 @@ Once a hook gets invoked from `git`, all the different types of hook will run.
 
 ## Installation
 
-To install it yourself do:
-
 ```bash
-	$
+brew tap frankywahl/brew git@github.com:frankywahl/homebrew-brew.git
+brew install --HEAD frankywahl/brew/super_hooks
 ```
 
-Then from any git project you can use:
+### Installation from source
+
+You will need [`Go`](https://golang.org) to install it yourself from source
 
 ```bash
-	$ super_hooks --install
+$ make install
 ```
 
 ## Usage
@@ -30,19 +31,19 @@ Then from any git project you can use:
 Install `super_hooks` into a git repository:
 
 ```bash
-	$ super_hooks --install
+$ super_hooks --install
 ```
 
 List the current hooks:
 
 ``` bash
-	$ super_hooks
+$ super_hooks
 ```
 
 See the other options with:
 
 ```bash
-	$ super_hooks --help
+$ super_hooks --help
 ```
 
 ### Creating hooks

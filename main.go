@@ -103,12 +103,13 @@ func main() {
 			if len(h.Executables()) > 0 {
 				fmt.Fprintf(writeBuffer, h.Name)
 				fmt.Fprintf(writeBuffer, "\n-------------\n")
-				for _, executable := range h.Executables() {
+				for _, cmd := range h.Executables() {
+					fmt.Fprintf(writeBuffer, cmd.Args[0])
 					fmt.Fprintf(writeBuffer, "\t")
-					fmt.Fprintf(writeBuffer, executable.FilePath)
 					fmt.Fprintf(writeBuffer, "\n\t  ~> ")
-					executable.Stdout = writeBuffer
-					executable.Explain()
+					cmd.Stdout = writeBuffer
+					cmd.Args = append(cmd.Args, "--about")
+					cmd.Run()
 					fmt.Println(writeBuffer)
 					writeBuffer.Reset()
 				}
@@ -125,6 +126,8 @@ func main() {
 	} else {
 		errors := []error{}
 		for _, executable := range hookObject.Executables() {
+			executable.Stdout = os.Stdout
+			executable.Stderr = os.Stderr
 			if err := executable.Run(); err != nil {
 				errors = append(errors, err)
 			}

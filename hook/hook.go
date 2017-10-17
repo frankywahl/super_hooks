@@ -3,9 +3,9 @@ package hook
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 
-	"github.com/frankywahl/super_hooks/file_runner"
 	"github.com/frankywahl/super_hooks/git"
 )
 
@@ -64,8 +64,8 @@ func For(hookName string) (Hook, error) {
 }
 
 // Executables will list out all executable runners for a given hook
-func (h *Hook) Executables() []file_runner.FileRunner {
-	var runners []file_runner.FileRunner
+func (h *Hook) Executables() []*exec.Cmd {
+	var cmds []*exec.Cmd
 
 	for _, location := range h.folderLocations {
 		path := filepath.Join(location, h.Name)
@@ -77,13 +77,13 @@ func (h *Hook) Executables() []file_runner.FileRunner {
 		} else {
 			filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 				if !f.IsDir() {
-					runners = append(runners, file_runner.New(path))
+					cmds = append(cmds, exec.Command(path))
 				}
 				return nil
 			})
 		}
 	}
-	return runners
+	return cmds
 }
 
 func allPath() []string {

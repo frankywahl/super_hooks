@@ -31,6 +31,9 @@ var installCmd = &cobra.Command{
 			if directoryExists {
 				return errors.New("SuperHooks already installed")
 			} else {
+				if Verbose {
+					fmt.Printf("Renaming %s to %s\n", originalDir, destinationDir)
+				}
 				if err := os.Rename(originalDir, destinationDir); err != nil {
 					return err
 				}
@@ -64,6 +67,9 @@ fi
 					defer file.Close()
 					file.Chmod(0755)
 
+					if Verbose {
+						fmt.Printf("Writing new file %s\n", fileName)
+					}
 					err = tmpl.Execute(file, data)
 				}
 				fmt.Println("Super Hooks installed successfully")

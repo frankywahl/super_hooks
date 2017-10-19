@@ -39,3 +39,10 @@ func Execute() {
 		os.Exit(-1)
 	}
 }
+
+// Verbose allows commands to get more output
+var Verbose bool
+
+func init() {
+	RootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
+}

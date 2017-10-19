@@ -22,7 +22,7 @@ var listCmd = &cobra.Command{
 		for _, h := range hook.List {
 
 			cmds := hook.For(h)
-			if len(cmds) > 0 {
+			if len(cmds) > 0 || Verbose {
 				fmt.Fprintf(writeBuffer, h)
 				fmt.Fprintf(writeBuffer, "\n-------------\n")
 			}

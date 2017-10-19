@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
+	"strings"
 
 	"github.com/frankywahl/super_hooks/hook"
 	"github.com/spf13/cobra"
@@ -24,6 +26,13 @@ var runCmd = &cobra.Command{
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 			cmd.Args = append(cmd.Args, args[1:]...)
+			if Verbose {
+				if len(args[1:]) > 0 {
+					fmt.Printf("Running %s hook %s with no arguments\n", args[0], cmd.Path)
+				} else {
+					fmt.Printf("Running %s hook %s with arguments %s\n", args[0], cmd.Path, strings.Join(args[1:], ","))
+				}
+			}
 			if err := cmd.Run(); err != nil {
 				errors = append(errors, err)
 			}

@@ -31,19 +31,19 @@ $ make install
 Install `super_hooks` into a git repository:
 
 ```bash
-$ super_hooks --install
+$ super_hooks install
 ```
 
 List the current hooks:
 
 ``` bash
-$ super_hooks
+$ super_hooks list
 ```
 
 See the other options with:
 
 ```bash
-$ super_hooks --help
+$ super_hooks help
 ```
 
 ### Creating hooks

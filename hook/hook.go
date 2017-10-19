@@ -9,11 +9,14 @@ import (
 	"github.com/frankywahl/super_hooks/git"
 )
 
-var list = map[string]Hook{}
+// List contains a list of all known hooks
+var List = []string{}
+
+var paths = []string{}
 
 func init() {
-	paths := allPath()
-	var localList = []string{
+	paths = allPath()
+	List = []string{
 		"applypatch-msg",
 		"commit-msg",
 		"post-applypatch",
@@ -30,45 +33,14 @@ func init() {
 		"update",
 		"pre-push",
 	}
-
-	for _, hookName := range localList {
-		list[hookName] = Hook{
-			Name:            hookName,
-			folderLocations: paths,
-		}
-	}
 }
 
-type Hook struct {
-	Name            string
-	folderLocations []string
-}
-
-// List will return a list of all hooks known to the system
-func List() []Hook {
-	var hook []Hook
-	for _, hookValue := range list {
-		hook = append(hook, hookValue)
-	}
-	return hook
-}
-
-// For will return Hook objects for a given hook type
-func For(hookName string) (Hook, error) {
-	hook, ok := list[hookName]
-	if ok {
-		return hook, nil
-	} else {
-		return Hook{}, fmt.Errorf("Could not find hooks for %s", hookName)
-	}
-}
-
-// Executables will list out all executable runners for a given hook
-func (h *Hook) Executables() []*exec.Cmd {
+// For will return a list of executables for a given hook
+func For(hookName string) []*exec.Cmd {
 	var cmds []*exec.Cmd
 
-	for _, location := range h.folderLocations {
-		path := filepath.Join(location, h.Name)
+	for _, location := range paths {
+		path := filepath.Join(location, hookName)
 		if _, err := os.Stat(path); err != nil {
 			if os.IsNotExist(err) {
 			} else {
@@ -101,4 +73,13 @@ func allPath() []string {
 	}
 
 	return paths
+}
+
+func hasElement(list []string, word string) bool {
+	for _, element := range list {
+		if element == word {
+			return true
+		}
+	}
+	return false
 }

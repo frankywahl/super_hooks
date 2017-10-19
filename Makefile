@@ -3,6 +3,7 @@ VET_REPORT = vet.report
 TEST_REPORT = tests.xml
 GOARCH = amd64
 
+VERSION="0.0.1"
 COMMIT=$(shell git rev-parse HEAD)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
@@ -13,7 +14,7 @@ CURRENT_DIR=$(shell pwd)
 BUILD_DIR_LINK=$(shell readlink ${BUILD_DIR})
 
 # Setup the -ldflags option for go build here, interpolate the variable values
-LDFLAGS = -ldflags "-X github.com/frankywahl/super_hooks/version.GitRevision=${COMMIT}"
+LDFLAGS = -ldflags "-X github.com/frankywahl/super_hooks/version.GitRevision=${COMMIT} -X github.com/frankywahl/super_hooks/version.Version=${VERSION}"
 
 # Build the project
 all: clean test vet linux darwin windows

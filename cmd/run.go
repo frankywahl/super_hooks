@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"sync"
+	"time"
 
 	"github.com/frankywahl/super_hooks/hook"
 	"github.com/spf13/cobra"
@@ -23,8 +24,15 @@ var runCmd = &cobra.Command{
 	Args:    cobra.MinimumNArgs(1),
 	Example: "super_hooks run pre-commit",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if err := runCommands(hook.For(args[0]), args[1:]); err != nil {
-			fmt.Fprintf(os.Stderr, "error running commands %v", err)
+		now := time.Now()
+		hooks := hook.For(args[0])
+		err := runCommands(hooks, args[1:])
+		if Verbose {
+			fmt.Fprintf(os.Stdout, "took %s to run %d hooks\n", time.Since(now), len(hooks))
+		}
+
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "error running commands %v\n", err)
 			os.Exit(1)
 		}
 		os.Exit(0)

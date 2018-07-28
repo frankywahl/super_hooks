@@ -22,26 +22,28 @@ var installCmd = &cobra.Command{
 	`,
 	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if folder, err := git.TopLevel(); err != nil {
+		folder, err := git.TopLevel()
+		if err != nil {
 			panic(err)
-		} else {
-			originalDir := filepath.Join(folder, ".git", "hooks")
-			destinationDir := filepath.Join(folder, ".git", "hooks.back")
-			directoryExists, _ := exists(destinationDir)
-			if directoryExists {
-				return errors.New("SuperHooks already installed")
-			} else {
-				if Verbose {
-					fmt.Printf("Renaming %s to %s\n", originalDir, destinationDir)
-				}
-				if err := os.Rename(originalDir, destinationDir); err != nil {
-					return err
-				}
-				if err := os.Mkdir(originalDir, os.ModePerm); err != nil {
-					return err
-				}
+		}
+		originalDir := filepath.Join(folder, ".git", "hooks")
+		destinationDir := filepath.Join(folder, ".git", "hooks.back")
+		directoryExists, _ := exists(destinationDir)
 
-				temp := `#!/usr/bin/env bash
+		if directoryExists {
+			return errors.New("SuperHooks already installed")
+		}
+		if Verbose {
+			fmt.Printf("Renaming %s to %s\n", originalDir, destinationDir)
+		}
+		if err := os.Rename(originalDir, destinationDir); err != nil {
+			return err
+		}
+		if err := os.Mkdir(originalDir, os.ModePerm); err != nil {
+			return err
+		}
+
+		temp := `#!/usr/bin/env bash
 if command -v super_hooks &>/dev/null; then
 	super_hooks run {{.FileName}} $@
 else
@@ -49,33 +51,31 @@ else
 	exit 1
 fi
 `
-				for _, hookName := range hook.List {
-					data := struct {
-						FileName string
-					}{hookName}
+		for _, hookName := range hook.List {
+			data := struct {
+				FileName string
+			}{hookName}
 
-					tmpl, err := template.New("Anything").Parse(temp)
-					if err != nil {
-						panic(err)
-					}
-
-					fileName := filepath.Join(originalDir, hookName)
-					file, err := os.Create(fileName)
-					if err != nil {
-						panic(err)
-					}
-					defer file.Close()
-					file.Chmod(0755)
-
-					if Verbose {
-						fmt.Printf("Writing new file %s\n", fileName)
-					}
-					err = tmpl.Execute(file, data)
-				}
-				fmt.Println("Super Hooks installed successfully")
-				return nil
+			tmpl, err := template.New("Anything").Parse(temp)
+			if err != nil {
+				panic(err)
 			}
+
+			fileName := filepath.Join(originalDir, hookName)
+			file, err := os.Create(fileName)
+			if err != nil {
+				panic(err)
+			}
+			defer file.Close()
+			file.Chmod(0755)
+
+			if Verbose {
+				fmt.Printf("Writing new file %s\n", fileName)
+			}
+			err = tmpl.Execute(file, data)
 		}
+		fmt.Println("Super Hooks installed successfully")
+		return nil
 	},
 }
 

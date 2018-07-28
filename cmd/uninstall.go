@@ -27,19 +27,18 @@ var uninstallCmd = &cobra.Command{
 			directoryExists, _ := exists(destinationDir)
 			if !directoryExists {
 				return errors.New("Super hooks is not installed")
-			} else {
-				if Verbose {
-					fmt.Printf("Removing %s\n", destinationDir)
-				}
-				if err := os.RemoveAll(originalDir); err != nil {
-					panic(err)
-				}
-				if Verbose {
-					fmt.Printf("Renaming %s to %s\n", destinationDir, originalDir)
-				}
-				if err := os.Rename(destinationDir, originalDir); err != nil {
-					fmt.Println(err)
-				}
+			}
+			if Verbose {
+				fmt.Printf("Removing %s\n", destinationDir)
+			}
+			if err := os.RemoveAll(originalDir); err != nil {
+				panic(err)
+			}
+			if Verbose {
+				fmt.Printf("Renaming %s to %s\n", destinationDir, originalDir)
+			}
+			if err := os.Rename(destinationDir, originalDir); err != nil {
+				fmt.Println(err)
 			}
 		}
 		fmt.Println("Super Hooks uninstalled successfully")

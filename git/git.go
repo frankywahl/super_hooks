@@ -1,4 +1,4 @@
-// Package for interfacing with Git
+// Package git for interfacing with Git
 package git
 
 import (
@@ -23,9 +23,8 @@ func TopLevel() (string, error) {
 	out, err := cmd.Output()
 	if err != nil {
 		return "", err
-	} else {
-		return strings.TrimSpace(string(out[:])), nil
 	}
+	return strings.TrimSpace(string(out[:])), nil
 }
 
 // GlobalHookPath hooks path
@@ -34,9 +33,8 @@ func GlobalHookPath() (string, error) {
 	out, err := cmd.Output()
 	if err != nil {
 		return "", err
-	} else {
-		return strings.TrimSpace(string(out[:])), nil
 	}
+	return strings.TrimSpace(string(out[:])), nil
 }
 
 // UserHookPath hooks path
@@ -45,18 +43,16 @@ func UserHookPath() (string, error) {
 	out, err := cmd.Output()
 	if err != nil {
 		return "", err
-	} else {
-		return strings.TrimSpace(string(out[:])), nil
 	}
+	return strings.TrimSpace(string(out[:])), nil
 }
 
-// GlobalHookPath hooks path
+// LocalHookPath hooks path
 func LocalHookPath() (string, error) {
 	cmd := exec.Command("git", "config", "hooks.local")
 	out, err := cmd.Output()
 	if err != nil {
 		return "", err
-	} else {
-		return strings.TrimSpace(string(out[:])), nil
 	}
+	return strings.TrimSpace(string(out[:])), nil
 }

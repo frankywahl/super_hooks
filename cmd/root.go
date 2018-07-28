@@ -25,9 +25,8 @@ var RootCmd = &cobra.Command{
 		fileName := path.Base(file)
 		if fileName == "super_hooks" {
 			return listCmd.RunE(cmd, []string{})
-		} else {
-			return runCmd.RunE(cmd, []string{fileName})
 		}
+		return runCmd.RunE(cmd, []string{fileName})
 	},
 }
 

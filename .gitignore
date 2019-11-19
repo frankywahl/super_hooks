@@ -33,3 +33,4 @@ vendor/
 tests.xml
 vet.report
 super_hooks*
+dist/

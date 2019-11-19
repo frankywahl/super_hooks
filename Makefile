@@ -10,8 +10,7 @@ BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 # Symlink into GOPATH
 GITHUB_USERNAME=frankywahl
 BUILD_DIR=${GOPATH}/src/github.com/${GITHUB_USERNAME}/${BINARY}
-CURRENT_DIR=$(shell pwd)
-BUILD_DIR_LINK=$(shell readlink ${BUILD_DIR})
+GITHUB_TOKEN?= "TBD"
 
 # Setup the -ldflags option for go build here, interpolate the variable values
 LDFLAGS = -ldflags "-X github.com/frankywahl/super_hooks/version.GitRevision=${COMMIT} -X github.com/frankywahl/super_hooks/version.Version=${VERSION}"
@@ -22,21 +21,6 @@ all: clean test vet linux darwin windows
 install:
 	cd ${BUILD_DIR}; \
 	go install ${LDFLAGS}; \
-	cd - >/dev/null
-
-linux:
-	cd ${BUILD_DIR}; \
-	GOOS=linux GOARCH=${GOARCH} go build ${LDFLAGS} -o ${BINARY}-linux-${GOARCH} . ; \
-	cd - >/dev/null
-
-darwin:
-	cd ${BUILD_DIR}; \
-	GOOS=darwin GOARCH=${GOARCH} go build ${LDFLAGS} -o ${BINARY}-darwin-${GOARCH} . ; \
-	cd - >/dev/null
-
-windows:
-	cd ${BUILD_DIR}; \
-	GOOS=windows GOARCH=${GOARCH} go build ${LDFLAGS} -o ${BINARY}-windows-${GOARCH}.exe . ; \
 	cd - >/dev/null
 
 test:
@@ -60,4 +44,15 @@ clean:
 	-rm -f ${BINARY}
 	-rm -f ${BINARY}-*
 
+release:
+	docker run --rm --privileged \
+		-v $(shell pwd):/go/src/github.com/frankywahl/super_hooks \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-w /go/src/github.com/frankywahl/super_hooks \
+		-e GITHUB_TOKEN=${GITHUB_TOKEN} \
+		goreleaser/goreleaser release \
+			--rm-dist
+
 .PHONY: linux darwin windows test vet fmt clean install
+
+

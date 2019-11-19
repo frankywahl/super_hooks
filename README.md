@@ -90,9 +90,7 @@ Example: I have [my own hooks](https://github.com/frankywahl/git_hooks) which I 
 ```
 
 ## Code Status
-[![Build Status]()](https://travis-ci.org/frankywahl/super_hooks)
-[![Code Climate]()](https://codeclimate.com/github/frankywahl/super_hooks)
-[![Test Coverage]()](https://codeclimate.com/github/frankywahl/super_hooks)
+[![Build Status](https://travis-ci.org/frankywahl/super_hooks.svg?branch=master)](https://travis-ci.org/frankywahl/super_hooks)
 
 ## Contributing
 
@@ -105,8 +103,6 @@ Example: I have [my own hooks](https://github.com/frankywahl/git_hooks) which I 
 ## Copyright
 
 Copyright (c) 2017 Franky W.
-
-See LICENSE.txt for details.
 
 ## Credits
 

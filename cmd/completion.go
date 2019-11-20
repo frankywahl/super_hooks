@@ -24,7 +24,7 @@ To configure your zhell to load completions for each session add to your zshrc
 %s completion zsh >> ~/.%s.zshrc
 Alternatively, you can put it in any folder exposed by the $fpath environment`, os.Args[0], os.Args[0]),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return RootCmd.GenZshCompletion(os.Stdout)
+		return rootCmd.GenZshCompletion(os.Stdout)
 	},
 }
 
@@ -40,7 +40,7 @@ To load completion run
 To configure your bash shell to load completions for each session add to your bashrc
 %s completion bash >> ~/.bashrc`, os.Args[0], os.Args[0]),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		RootCmd.GenBashCompletion(os.Stdout)
+		rootCmd.GenBashCompletion(os.Stdout)
 		return nil
 	},
 }
@@ -48,5 +48,5 @@ To configure your bash shell to load completions for each session add to your ba
 func init() {
 	completionCmd.AddCommand(zshCmd)
 	completionCmd.AddCommand(bashCmd)
-	RootCmd.AddCommand(completionCmd)
+	rootCmd.AddCommand(completionCmd)
 }

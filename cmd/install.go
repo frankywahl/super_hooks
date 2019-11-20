@@ -80,7 +80,7 @@ fi
 }
 
 func init() {
-	RootCmd.AddCommand(installCmd)
+	rootCmd.AddCommand(installCmd)
 }
 
 // exists returns whether the given file or directory exists or not

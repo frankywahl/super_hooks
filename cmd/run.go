@@ -16,9 +16,10 @@ var runCmd = &cobra.Command{
 	Allows to simulate the running of a sepecific hook
 	without having to invoke git
 	`,
-	Aliases: []string{"r"},
-	Args:    cobra.MinimumNArgs(1),
-	Example: "super_hooks run pre-commit",
+	Aliases:   []string{"r"},
+	Args:      cobra.MinimumNArgs(1),
+	Example:   "super_hooks run pre-commit",
+	ValidArgs: hook.List,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		errors := []error{}
 

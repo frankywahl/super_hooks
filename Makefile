@@ -1,7 +1,7 @@
 COMMIT=$(shell git rev-parse HEAD)
 
 GITHUB_TOKEN?=""
-VERSION?="0.0.1"
+VERSION?="tip"
 
 # Setup the -ldflags option for go build here, interpolate the variable values
 LDFLAGS = -ldflags "-X github.com/frankywahl/super_hooks/version.GitRevision=${COMMIT} -X github.com/frankywahl/super_hooks/version.Version=${VERSION}"

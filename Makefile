@@ -1,7 +1,7 @@
-VERSION="0.0.1"
 COMMIT=$(shell git rev-parse HEAD)
 
 GITHUB_TOKEN?=""
+VERSION?="0.0.1"
 
 # Setup the -ldflags option for go build here, interpolate the variable values
 LDFLAGS = -ldflags "-X github.com/frankywahl/super_hooks/version.GitRevision=${COMMIT} -X github.com/frankywahl/super_hooks/version.Version=${VERSION}"
@@ -22,6 +22,7 @@ fmt:
 	test -z $$(gofmt -l .) # This will return non-0 if unsuccessful  run `go fmt ./...` to fix
 
 release:
+	git tag v${VERSION}
 	docker run --rm --privileged \
 		-v $(shell pwd):/go/src/github.com/frankywahl/super_hooks \
 		-v /var/run/docker.sock:/var/run/docker.sock \

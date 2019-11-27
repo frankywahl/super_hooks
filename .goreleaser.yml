@@ -49,4 +49,4 @@ brews:
   description: "Hooks handling for git"
   github:
     owner: frankywahl
-    name: homebrew-brew
+    name: homebrew-tap

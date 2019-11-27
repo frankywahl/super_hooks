@@ -20,7 +20,7 @@ builds:
     env:
       - CGO_ENABLED=0
     ldflags:
-      - -s -w -X github.com/frankywahl/super_hooks/version.GitRevision={{.FullCommit}} -X github.com/frankywahl/super_hooks/version.Version={{.Version}}
+      - -s -w -X github.com/frankywahl/super_hooks/version.GitRevision={{.FullCommit}} -X github.com/frankywahl/super_hooks/version.Version={{.Version}} -X github.com/frankywahl/super_hooks/version.CreatedAt={{.Date}}
 archives:
 -
   name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}-{{.Arch}}"

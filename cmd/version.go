@@ -47,8 +47,16 @@ type versionData struct {
 		Args:    cobra.NoArgs,
 		Aliases: []string{"v"},
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if version.CreatedAt == "" {
+				version.CreatedAt = time.Now().UTC().Format(time.RFC3339)
+			}
+			createdAt, err := time.Parse(time.RFC3339, version.CreatedAt)
+			if err != nil {
+				return fmt.Errorf("could not parse time: %w", err)
+			}
+
 			data := &VersionData{
-				CreatedAt: time.Now().UTC(),
+				CreatedAt: createdAt.UTC(),
 				Version:   version.Version,
 				Revision:  version.GitRevision,
 			}

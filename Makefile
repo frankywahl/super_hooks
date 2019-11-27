@@ -2,9 +2,10 @@ COMMIT=$(shell git rev-parse HEAD)
 
 GITHUB_TOKEN?=""
 VERSION?="tip"
+DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 # Setup the -ldflags option for go build here, interpolate the variable values
-LDFLAGS = -ldflags "-X github.com/frankywahl/super_hooks/version.GitRevision=${COMMIT} -X github.com/frankywahl/super_hooks/version.Version=${VERSION}"
+LDFLAGS = -ldflags "-X github.com/frankywahl/super_hooks/version.GitRevision=${COMMIT} -X github.com/frankywahl/super_hooks/version.Version=${VERSION} -X github.com/frankywahl/super_hooks/version.CreatedAt=${DATE}"
 
 # Build the project
 all: clean test vet fmt

@@ -48,7 +48,7 @@ func For(hookName string) []*exec.Cmd {
 			}
 		} else {
 			filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
-				if !f.IsDir() {
+				if !f.IsDir() && isExecutable(f) {
 					cmds = append(cmds, exec.Command(path))
 				}
 				return nil
@@ -56,6 +56,10 @@ func For(hookName string) []*exec.Cmd {
 		}
 	}
 	return cmds
+}
+
+func isExecutable(f os.FileInfo) bool {
+	return (f.Mode() & 0111) != 0
 }
 
 func allPath() []string {

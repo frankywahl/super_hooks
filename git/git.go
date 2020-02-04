@@ -28,31 +28,31 @@ func TopLevel() (string, error) {
 }
 
 // GlobalHookPath hooks path
-func GlobalHookPath() (string, error) {
-	cmd := exec.Command("git", "config", "hooks.global")
+func GlobalHookPath() ([]string, error) {
+	cmd := exec.Command("git", "config", "--get-all", "hooks.global")
 	out, err := cmd.Output()
 	if err != nil {
-		return "", err
+		return []string{}, err
 	}
-	return strings.TrimSpace(string(out[:])), nil
+	return strings.Split(strings.TrimSpace(string(out[:])), "\n"), nil
 }
 
 // UserHookPath hooks path
-func UserHookPath() (string, error) {
-	cmd := exec.Command("git", "config", "hooks.user")
+func UserHookPath() ([]string, error) {
+	cmd := exec.Command("git", "config", "--get-all", "hooks.user")
 	out, err := cmd.Output()
 	if err != nil {
-		return "", err
+		return []string{}, err
 	}
-	return strings.TrimSpace(string(out[:])), nil
+	return strings.Split(strings.TrimSpace(string(out[:])), "\n"), nil
 }
 
 // LocalHookPath hooks path
-func LocalHookPath() (string, error) {
+func LocalHookPath() ([]string, error) {
 	cmd := exec.Command("git", "config", "hooks.local")
 	out, err := cmd.Output()
 	if err != nil {
-		return "", err
+		return []string{}, err
 	}
-	return strings.TrimSpace(string(out[:])), nil
+	return strings.Split(strings.TrimSpace(string(out[:])), "\n"), nil
 }

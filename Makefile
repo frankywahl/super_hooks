@@ -33,4 +33,5 @@ release:
 
 .PHONY: test vet fmt clean install
 
-
+docker:
+	docker build -t docker.pkg.github.com/frankywahl/super_hooks/cli .

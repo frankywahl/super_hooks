@@ -29,6 +29,9 @@ jobs:
           go mod download
           go mod tidy -v
 
+      - name: Login Github Docker images
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
       - name: Run GoReleaser
         env:
           GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}

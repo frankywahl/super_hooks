@@ -20,30 +20,36 @@ brew install --HEAD frankywahl/brew/super_hooks
 
 ### Installation from source
 
-You will need [`Go`](https://golang.org) to install it yourself from source
+#### Requirements
+
+  * [go](https://golang.org): to install it yourself from source
+
+#### Procedure
 
 ```bash
-$ make install
+make install
 ```
+
+This will create a binary tagged with the commit you're currently on
 
 ## Usage
 
 Install `super_hooks` into a git repository:
 
 ```bash
-$ super_hooks install
+super_hooks install
 ```
 
 List the current hooks:
 
 ``` bash
-$ super_hooks list
+super_hooks list
 ```
 
 See the other options with:
 
 ```bash
-$ super_hooks help
+super_hooks help
 ```
 
 ### Creating hooks
@@ -59,13 +65,15 @@ $ super_hooks help
 
 The way most people work is to have a single folder with all hooks for them.
 
-	$ `git config --global hooks.global `pwd``
+```bash
+git config --global hooks.global `pwd`
+```
 
 
 Note: You can have multiple `hooks.global` configurations by either:
 
-	1. adding them with the command: `git config --add hooks.global </path/to/hooks/directory>`
-	2. adding the paths in a comma separated value way
+  1. adding them with the command: `git config --add hooks.global </path/to/hooks/directory>`
+  1. adding the paths in a comma separated value way
 
 #### Examples
 
@@ -73,10 +81,10 @@ Once `super_hooks` is installed, you can easily create hooks by placing executab
 For example, if you were to create a pre-commit hook for your user, you would do the following:
 
 ```bash
-	$ mkdir -p ~/.git_hooks/pre-commit/
-	$ git config hooks.user ~/.git_hooks
-	$ touch ~/.git_hooks/pre-commit/cool_hook
-	$ chmod 755 ~/.git_hooks/pre-commit/cool_hook
+mkdir -p ~/.git_hooks/pre-commit/
+git config hooks.user ~/.git_hooks
+touch ~/.git_hooks/pre-commit/cool_hook
+chmod 755 ~/.git_hooks/pre-commit/cool_hook
 ```
 
 Note: having a `--about` option when running your executable will allow you to have a short description when listing hooks. See my [rake example](https://github.com/frankywahl/super_hooks/blob/master/git_hooks/pre-commit/rake.sh) for this project.
@@ -84,13 +92,27 @@ Note: having a `--about` option when running your executable will allow you to h
 Example: I have [my own hooks](https://github.com/frankywahl/git_hooks) which I have installed for all of my projects:
 
 ```bash
-	$ git clone git@github.com:frankywahl/git_hooks.git somewhere
-	$ cd somewhere
-	$ git config --global hooks.global `pwd`
+git clone git@github.com:frankywahl/git_hooks.git somewhere
+cd somewhere
+git config --global hooks.global `pwd`
+```
+
+#### Help
+
+You can get help on the command line to see supported commands:
+
+```bash
+super_hooks --help
+```
+
+Then for a specific operation example
+
+```bash
+super_hooks install --help
 ```
 
 ## Code Status
-[![Build Status](https://travis-ci.org/frankywahl/super_hooks.svg?branch=master)](https://travis-ci.org/frankywahl/super_hooks)
+![](https://github.com/frankywahl/super_hooks/workflows/Run%20tests/badge.svg?branch=master)
 
 ## Contributing
 
@@ -102,7 +124,7 @@ Example: I have [my own hooks](https://github.com/frankywahl/git_hooks) which I 
 
 ## Copyright
 
-Copyright (c) 2017 Franky W.
+Copyright (c) 2020 Franky W.
 
 ## Credits
 

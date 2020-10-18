@@ -14,8 +14,8 @@ Once a hook gets invoked from `git`, all the different types of hook will run.
 ## Installation
 
 ```bash
-brew tap frankywahl/brew git@github.com:frankywahl/homebrew-brew.git
-brew install --HEAD frankywahl/brew/super_hooks
+brew tap frankywahl/tap
+brew install frankywahl/tap/super_hooks
 ```
 
 ### Installation from source

@@ -59,8 +59,8 @@ dockers:
     binaries:
     - super_hooks
     image_templates:
-    - "docker.pkg.github.com/frankywahl/super_hooks/cli:latest"
-    - "docker.pkg.github.com/frankywahl/super_hooks/cli:{{ .Tag }}"
+    - "ghcr.io/frankywahl/super_hooks:latest"
+    - "ghcr.io/frankywahl/super_hooks:{{ .Tag }}"
     dockerfile: .goreleaser.Dockerfile
     build_flag_templates:
     - "--pull"

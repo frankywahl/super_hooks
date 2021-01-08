@@ -35,3 +35,4 @@ release:
 
 docker:
 	docker build -t docker.pkg.github.com/frankywahl/super_hooks/cli .
+	docker build -t ghcr.io/frankywahl/super_hooks .

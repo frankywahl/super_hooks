@@ -48,7 +48,7 @@ brews:
   folder: Formula
   homepage: "http://github.com/frankywahl/super_hooks"
   description: "Hooks handling for git"
-  github:
+  tap:
     owner: frankywahl
     name: homebrew-tap
 
@@ -56,7 +56,7 @@ dockers:
   -
     goos: linux
     goarch: amd64
-    binaries:
+    ids:
     - super_hooks
     image_templates:
     - "ghcr.io/frankywahl/super_hooks:latest"

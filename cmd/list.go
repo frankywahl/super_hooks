@@ -99,7 +99,3 @@ func printHooks(hooks <-chan customHook, format string) error {
 	}
 	return nil
 }
-
-func init() {
-	rootCmd.AddCommand(newListCmd())
-}

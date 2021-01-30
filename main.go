@@ -1,12 +1,17 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/frankywahl/super_hooks/cmd"
 )
 
 func main() {
-	// if _, file, no, ok := runtime.Caller(0); ok {
-	// 	fmt.Printf("HERE: File: %s, Line: %d\n", file, no)
-	// }
-	cmd.Execute()
+	superHooks := cmd.SuperHooks()
+	err := superHooks.Execute()
+	if err != nil {
+		fmt.Printf("Error: %s\n\n", err)
+		os.Exit(-1)
+	}
 }

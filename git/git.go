@@ -2,6 +2,7 @@
 package git
 
 import (
+	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -27,29 +28,9 @@ func TopLevel() (string, error) {
 	return strings.TrimSpace(string(out[:])), nil
 }
 
-// GlobalHookPath hooks path
-func GlobalHookPath() ([]string, error) {
-	cmd := exec.Command("git", "config", "--get-all", "hooks.global")
-	out, err := cmd.Output()
-	if err != nil {
-		return []string{}, err
-	}
-	return strings.Split(strings.TrimSpace(string(out[:])), "\n"), nil
-}
-
-// UserHookPath hooks path
-func UserHookPath() ([]string, error) {
-	cmd := exec.Command("git", "config", "--get-all", "hooks.user")
-	out, err := cmd.Output()
-	if err != nil {
-		return []string{}, err
-	}
-	return strings.Split(strings.TrimSpace(string(out[:])), "\n"), nil
-}
-
-// LocalHookPath hooks path
-func LocalHookPath() ([]string, error) {
-	cmd := exec.Command("git", "config", "hooks.local")
+// HookPath gives us a hook path
+func HookPath(p string) ([]string, error) {
+	cmd := exec.Command("git", "config", fmt.Sprintf("hooks.%s", p))
 	out, err := cmd.Output()
 	if err != nil {
 		return []string{}, err

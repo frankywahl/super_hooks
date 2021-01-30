@@ -72,6 +72,3 @@ type versionData struct {
 
 	return cmd
 }
-func init() {
-	rootCmd.AddCommand(newVersionCmd())
-}

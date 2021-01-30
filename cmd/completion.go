@@ -7,10 +7,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// completionCmd represents the completion command
-var completionCmd = &cobra.Command{
-	Use:   "completion",
-	Short: "Entry point for generating command completions",
+func newCompletionCommand() *cobra.Command {
+	// completionCmd represents the completion command
+	completionCmd := &cobra.Command{
+		Use:   "completion",
+		Short: "Entry point for generating command completions",
+	}
+	completionCmd.AddCommand(
+		zshCmd,
+		bashCmd,
+	)
+	return completionCmd
+
 }
 
 // zshCmd represents the zsh completion command
@@ -24,7 +32,7 @@ To configure your zhell to load completions for each session add to your zshrc
 %s completion zsh >> ~/.%s.zshrc
 Alternatively, you can put it in any folder exposed by the $fpath environment`, os.Args[0], os.Args[0]),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return rootCmd.GenZshCompletion(os.Stdout)
+		return cmd.GenZshCompletion(os.Stdout)
 	},
 }
 
@@ -40,13 +48,7 @@ To load completion run
 To configure your bash shell to load completions for each session add to your bashrc
 %s completion bash >> ~/.bashrc`, os.Args[0], os.Args[0]),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		rootCmd.GenBashCompletion(os.Stdout)
+		cmd.GenBashCompletion(os.Stdout)
 		return nil
 	},
-}
-
-func init() {
-	completionCmd.AddCommand(zshCmd)
-	completionCmd.AddCommand(bashCmd)
-	rootCmd.AddCommand(completionCmd)
 }

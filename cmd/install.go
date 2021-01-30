@@ -16,7 +16,7 @@ var installCmd = &cobra.Command{
 	Use:   "install",
 	Short: "Installs super_hooks in this repository",
 	Long: `
-	Install super_hooks in the current directory. 
+	Install super_hooks in the current directory.
 	This changes the content of your .git/hooks folder
 	and make a backup of it into git/hooks.back
 	`,
@@ -77,10 +77,6 @@ fi
 		fmt.Println("Super Hooks installed successfully")
 		return nil
 	},
-}
-
-func init() {
-	rootCmd.AddCommand(installCmd)
 }
 
 // exists returns whether the given file or directory exists or not

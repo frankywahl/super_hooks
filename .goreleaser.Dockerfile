@@ -1,11 +1,11 @@
 FROM alpine
 
 ARG BUILD_VERSION
-ARG GIT_COMMIT
+ARG REVISION
 ARG BUILD_DATE
 ARG SOURCE
 
-LABEL org.opencontainers.image.commit=$GIT_COMMIT \
+LABEL org.opencontainers.image.revision=$REVISION \
   org.opencontainers.image.source=$SOURCE \
   org.opencontainers.image.version=$BUILD_VERSION \
   org.opencontainers.image.created=$BUILD_DATE

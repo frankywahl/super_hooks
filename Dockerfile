@@ -1,4 +1,4 @@
-FROM golang:1.15-alpine as build-env
+FROM golang:1.17-alpine as build-env
 RUN apk add --update make && apk add --update git
 WORKDIR $GOPATH/src/github.com/user/app
 COPY go.sum .

@@ -8,21 +8,23 @@ SOURCE?="github.com/frankywahl/super_hooks"
 # Setup the -ldflags option for go build here, interpolate the variable values
 LDFLAGS = -ldflags "-X ${SOURCE}/version.GitRevision=${COMMIT} -X ${SOURCE}/version.Version=${VERSION} -X ${SOURCE}/version.CreatedAt=${DATE}"
 
-# Build the project
-all: clean test vet fmt
-
+.PHONY: install
 install:
 	go install ${LDFLAGS}
 
+.PHONY: test
 test:
 	go test -v --race ./...
 
+.PHONY: vet
 vet:
 	go vet ./...
 
+.PHONY: fmt
 fmt:
 	test -z $$(gofmt -l .) # This will return non-0 if unsuccessful  run `go fmt ./...` to fix
 
+.PHONY: release
 release:
 	git tag v${VERSION} || git tag -d v${VERSION} && git tag v${VERSION}
 	docker run --rm --privileged \
@@ -33,8 +35,6 @@ release:
 		-e SOURCE=${SOURCE} \
 		goreleaser/goreleaser release --rm-dist --snapshot --skip-publish
 
-.PHONY: test vet fmt clean install
-
+.PHONY: docker
 docker:
-	docker build -t docker.pkg.github.com/frankywahl/super_hooks/cli .
 	docker build -t ghcr.io/frankywahl/super_hooks .

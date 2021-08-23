@@ -1,5 +1,5 @@
 FROM golang:1.17-alpine as build-env
-RUN apk add --update make && apk add --update git
+RUN apk update && apk add make git
 WORKDIR $GOPATH/src/github.com/user/app
 COPY go.sum .
 COPY go.mod .
@@ -9,6 +9,6 @@ RUN make install
 
 FROM alpine
 WORKDIR /app
-RUN apk add --update git
+RUN apk update && apk add git
 COPY --from=build-env /go/bin/super_hooks /usr/local/bin/.
-CMD ["super_hooks"]
+ENTRYPOINT ["super_hooks"]

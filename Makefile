@@ -3,9 +3,10 @@ COMMIT=$(shell git rev-parse HEAD)
 GITHUB_TOKEN?=""
 VERSION?=0.0.0
 DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+SOURCE?="github.com/frankywahl/super_hooks"
 
 # Setup the -ldflags option for go build here, interpolate the variable values
-LDFLAGS = -ldflags "-X github.com/frankywahl/super_hooks/version.GitRevision=${COMMIT} -X github.com/frankywahl/super_hooks/version.Version=${VERSION} -X github.com/frankywahl/super_hooks/version.CreatedAt=${DATE}"
+LDFLAGS = -ldflags "-X ${SOURCE}/version.GitRevision=${COMMIT} -X ${SOURCE}/version.Version=${VERSION} -X ${SOURCE}/version.CreatedAt=${DATE}"
 
 # Build the project
 all: clean test vet fmt
@@ -29,6 +30,7 @@ release:
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-w /go/src/github.com/frankywahl/super_hooks \
 		-e GITHUB_TOKEN=${GITHUB_TOKEN} \
+		-e SOURCE=${SOURCE} \
 		goreleaser/goreleaser release --rm-dist --snapshot --skip-publish
 
 .PHONY: test vet fmt clean install

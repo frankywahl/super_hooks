@@ -21,7 +21,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'simplecov-console'
-  gem.add_development_dependency 'codeclimate-test-reporter'
   gem.add_development_dependency 'bundler', '~> 1.7'
   gem.add_development_dependency 'rake', '~> 12.0.0'
   gem.add_development_dependency 'pry', '~> 0.10.1'

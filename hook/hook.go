@@ -64,26 +64,15 @@ func isExecutable(f os.FileInfo) bool {
 
 func allPath() []string {
 	paths := []string{}
-	if out, err := git.GlobalHookPath(); err == nil {
-		paths = append(paths, out...)
+	pathFuncs := []func() ([]string, error){
+		git.GlobalHookPath,
+		git.UserHookPath,
+		git.LocalHookPath,
 	}
-
-	if out, err := git.UserHookPath(); err == nil {
-		paths = append(paths, out...)
-	}
-
-	if out, err := git.LocalHookPath(); err == nil {
-		paths = append(paths, out...)
-	}
-
-	return paths
-}
-
-func hasElement(list []string, word string) bool {
-	for _, element := range list {
-		if element == word {
-			return true
+	for _, pathFunc := range pathFuncs {
+		if out, err := pathFunc(); err == nil {
+			paths = append(paths, out...)
 		}
 	}
-	return false
+	return paths
 }

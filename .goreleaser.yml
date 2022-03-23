@@ -24,11 +24,13 @@ builds:
       - -X github.com/frankywahl/super_hooks/version.GitRevision={{.FullCommit}}
       - -X github.com/frankywahl/super_hooks/version.Version={{.Version}}
       - -X github.com/frankywahl/super_hooks/version.CreatedAt={{.Date}}
+universal_binaries:
+  - replace: false
 archives:
 -
   name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}-{{.Arch}}"
   replacements:
-    darwin: macOS
+    darwin: MacOS
     linux: Linux
     windows: Windows
     amd64: 64bit

@@ -69,7 +69,6 @@ The way most people work is to have a single folder with all hooks for them.
 git config --global hooks.global `pwd`
 ```
 
-
 Note: You can have multiple `hooks.global` configurations by either:
 
   1. adding them with the command: `git config --add hooks.global </path/to/hooks/directory>`
@@ -124,8 +123,4 @@ super_hooks install --help
 
 ## Copyright
 
-Copyright (c) 2020 Franky W.
-
-## Credits
-
-A great thanks to [icefox git-hooks](https://github.com/icefox/git-hooks) which was greatly used for this project and his [blogpost](http://benjamin-meyer.blogspot.com/2010/06/managing-project-user-and-global-git.html)
+Copyright (c) 2022 Franky W.

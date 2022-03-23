@@ -49,7 +49,7 @@ func UserHookPath() ([]string, error) {
 
 // LocalHookPath hooks path
 func LocalHookPath() ([]string, error) {
-	cmd := exec.Command("git", "config", "hooks.local")
+	cmd := exec.Command("git", "config", "--get-all", "hooks.local")
 	out, err := cmd.Output()
 	if err != nil {
 		return []string{}, err

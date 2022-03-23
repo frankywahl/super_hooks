@@ -26,7 +26,7 @@ fmt:
 
 .PHONY: release
 release:
-	git tag v${VERSION} || git tag -d v${VERSION} && git tag v${VERSION}
+	git tag v${VERSION} || git tag --delete v${VERSION} && git tag v${VERSION}
 	docker run --rm --privileged \
 		-v $(shell pwd):/go/src/github.com/frankywahl/super_hooks \
 		-v /var/run/docker.sock:/var/run/docker.sock \

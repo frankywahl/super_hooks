@@ -20,7 +20,7 @@ var uninstallCmd = &cobra.Command{
 	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if folder, err := git.TopLevel(); err != nil {
-			panic(err)
+			return fmt.Errorf("could not get top level: %v", err)
 		} else {
 			originalDir := filepath.Join(folder, ".git", "hooks")
 			destinationDir := filepath.Join(folder, ".git", "hooks.back")

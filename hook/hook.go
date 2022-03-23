@@ -64,13 +64,10 @@ func isExecutable(f os.FileInfo) bool {
 
 func allPath() []string {
 	paths := []string{}
-	pathFuncs := []func() ([]string, error){
-		git.GlobalHookPath,
-		git.UserHookPath,
-		git.LocalHookPath,
-	}
-	for _, pathFunc := range pathFuncs {
-		if out, err := pathFunc(); err == nil {
+
+	hookTypes := []string{"global", "local", "user"}
+	for _, hookType := range hookTypes {
+		if out, err := git.HookPaths(hookType); err == nil {
 			paths = append(paths, out...)
 		}
 	}

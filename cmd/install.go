@@ -24,7 +24,7 @@ var installCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		folder, err := git.TopLevel()
 		if err != nil {
-			panic(err)
+			return fmt.Errorf("could not get top level: %v", err)
 		}
 		originalDir := filepath.Join(folder, ".git", "hooks")
 		destinationDir := filepath.Join(folder, ".git", "hooks.back")

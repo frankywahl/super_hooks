@@ -24,8 +24,8 @@ func TopLevel() (string, error) {
 // HookPaths returns all the paths set for a given hook.
 //
 // It looks up the config of hooks.% to identify locations
-func HookPaths(t string) ([]string, error) {
-	cmd := exec.Command("git", "config", "--get-all", fmt.Sprintf("hooks.%s", t))
+func HookPaths() ([]string, error) {
+	cmd := exec.Command("git", "config", "--get-all", "superhooks.path")
 	out, err := cmd.Output()
 	if err != nil {
 		return []string{}, err

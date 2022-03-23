@@ -1,15 +1,63 @@
 # SuperHooks
 
 ***SuperHooks*** is a quick way to have hooks apply across multiple projects.
-It allows you to decouple the hooks you use from the projects you use them in by pacing the hooks into separate folders.
+It allows you to decouple the hooks you use from the projects you use them in by placing the hooks into separate folders.
 
-Hooks are defined at three levels:
+Hooks folders are defined in the git config under `superhooks.path`
 
-  * Global hooks  : hooks available everywhere
-  * User hooks    : hooks used for your own user
-  * Project hooks : hooks used only for a project
+## Usage
 
-Once a hook gets invoked from `git`, all the different types of hook will run.
+<details>
+<summary>Usage of the CLI</summary>
+
+```bash
+super_hooks install       # Install `super_hooks` into a git repository
+super_hooks list          # List the current hooks
+super_hooks help          # See the other options
+super_hook run pre-commit # Run all pre-commit hooks manually
+```
+</details>
+
+### Creating hooks
+
+If you have a folder with the following structure
+
+```tree
+~
+└── hooks
+    ├── pre-commit
+    │   ├── script1.sh
+    │   └── script2.rb
+    └── pre-push
+        └── prevent-force
+            └── main.sh
+```
+
+All executables are placed under their respective folders.
+
+You would run `git config --global --add superhooks.path ~/hooks`. The hooks inside that folder would then run on all git repositories that have `super_hooks` installed. If you have project specific hooks, you can have them ran as well by adding to the project's git config with `git config --add ./path/to/hook/folder`
+
+#### Examples
+
+Once `super_hooks` is installed, you can easily create hooks by placing executables files (`chmod 755`) under a folder with the hook name.
+For example, if you were to create a pre-commit hook for your user, you would do the following:
+
+```bash
+mkdir -p ~/.git_hooks/pre-commit/
+git config --add superhooks.path ~/.git_hooks
+touch ~/.git_hooks/pre-commit/cool_hook
+chmod 755 ~/.git_hooks/pre-commit/cool_hook
+```
+
+Note: having a `--about` option when running your executable will allow you to have a short description when listing hooks. See my [rake example](https://github.com/frankywahl/super_hooks/blob/470e7dfedc0818644d9bded3afb48a8ecc7f51ae/git_hooks/pre-commit/rake.sh) for this project.
+
+Example: I have [my own hooks](https://github.com/frankywahl/git_hooks) which I have installed for all of my projects:
+
+```bash
+git clone git@github.com:frankywahl/git_hooks.git somewhere
+cd somewhere
+git config --global --add superhooks.path `pwd`
+```
 
 ## Installation
 
@@ -32,70 +80,6 @@ make install
 
 This will create a binary tagged with the commit you're currently on
 
-## Usage
-
-Install `super_hooks` into a git repository:
-
-```bash
-super_hooks install
-```
-
-List the current hooks:
-
-``` bash
-super_hooks list
-```
-
-See the other options with:
-
-```bash
-super_hooks help
-```
-
-### Creating hooks
-
-#### Locations
-
-| Hook Type           | Location                                       |
-| ---                 | ---                                            |
-| ***User Hooks***    | indicated by your `hooks.user` configuration   |
-| ***Project Hooks*** | indicated by your `hooks.local` configuration  |
-| ***Global Hooks***  | indicated by your `hooks.global` configuration |
-
-
-The way most people work is to have a single folder with all hooks for them.
-
-```bash
-git config --global hooks.global `pwd`
-```
-
-Note: You can have multiple `hooks.global` configurations by either:
-
-  1. adding them with the command: `git config --add hooks.global </path/to/hooks/directory>`
-  1. adding the paths in a comma separated value way
-
-#### Examples
-
-Once `super_hooks` is installed, you can easily create hooks by placing executables files (`chmod 755`) under a folder with the hook name.
-For example, if you were to create a pre-commit hook for your user, you would do the following:
-
-```bash
-mkdir -p ~/.git_hooks/pre-commit/
-git config hooks.user ~/.git_hooks
-touch ~/.git_hooks/pre-commit/cool_hook
-chmod 755 ~/.git_hooks/pre-commit/cool_hook
-```
-
-Note: having a `--about` option when running your executable will allow you to have a short description when listing hooks. See my [rake example](https://github.com/frankywahl/super_hooks/blob/master/git_hooks/pre-commit/rake.sh) for this project.
-
-Example: I have [my own hooks](https://github.com/frankywahl/git_hooks) which I have installed for all of my projects:
-
-```bash
-git clone git@github.com:frankywahl/git_hooks.git somewhere
-cd somewhere
-git config --global hooks.global `pwd`
-```
-
 #### Help
 
 You can get help on the command line to see supported commands:
@@ -111,7 +95,7 @@ super_hooks install --help
 ```
 
 ## Code Status
-![](https://github.com/frankywahl/super_hooks/workflows/Run%20tests/badge.svg?branch=master)
+![](https://github.com/frankywahl/super_hooks/workflows/Run%20tests/badge.svg?branch=main)
 
 ## Contributing
 

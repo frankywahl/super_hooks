@@ -17,10 +17,15 @@ func SuperHooks() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "super_hooks",
 		Short: "Tool for managing git-hooks",
-		Long: `
-	Tool that changes the git-hooks so that you can share hooks across mulitple git
-	directories. You include hooks in folder so that each executable can be in charge
-	of only one thing (preserving the SRP rule in your hooks too)`,
+		Long: `Tool that changes the git-hooks so that you can share hooks across mulitple git
+directories. You include hooks in folder so that each executable can be in charge
+of only one thing (preserving the SRP rule in your hooks too)
+
+
+Use the following  command to add a specific folder to your git hooks repository
+git config --add superhooks.path /path/to/folder/containing/hooks
+
+`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			file, err := os.Executable()
 			if err != nil {
@@ -37,6 +42,7 @@ func SuperHooks() *cobra.Command {
 
 	cmd.AddCommand(
 		runCmd,
+		newCmd(),
 		installCmd,
 		uninstallCmd,
 		newCompletionCommand(),

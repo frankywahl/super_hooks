@@ -42,3 +42,7 @@ release: ## Build a release locally. This will not be published
 .PHONY: docker
 docker: ## Build a docker image
 	docker build -t ghcr.io/frankywahl/super_hooks .
+
+.PHONY: vulncheck
+vulncheck: ## Run vulnerability scanner check
+	go run golang.org/x/vuln/cmd/govulncheck ./...

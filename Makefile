@@ -34,6 +34,10 @@ default: help
 %-docker: ## Run a make command using docker
 	@DOCKER=true $(MAKE) $*
 
+.PHONY: build
+build: ## Build will create a binary for this system. Similar to `go build`, but uses goreleaser.
+	$(GORELEASER) build --snapshot --clean --single-target
+
 .PHONY: clean
 clean: ## Clean all dependencies
 	-rm -f ${TEST_REPORT}
@@ -54,14 +58,7 @@ fmt: ## Run fmt on go files
 
 .PHONY: gorelease
 gorelease: ## Build a release locally. This will not be published
-	git tag v${VERSION} || git tag --delete v${VERSION} && git tag v${VERSION}
-	docker run --rm --privileged \
-		-v $(shell pwd):/go/src/github.com/frankywahl/super_hooks \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		-w /go/src/github.com/frankywahl/super_hooks \
-		-e GITHUB_TOKEN=${GITHUB_TOKEN} \
-		-e SOURCE=${SOURCE} \
-		goreleaser/goreleaser release --rm-dist --snapshot --skip-publish
+	SOURCE=$(shell hostname) $(GORELEASER) release --clean --snapshot --skip-publish
 
 .PHONY: help
 help: ## Show this help

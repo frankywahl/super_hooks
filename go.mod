@@ -3,7 +3,7 @@ module github.com/frankywahl/super_hooks
 go 1.21
 
 require (
-	github.com/spf13/cobra v1.7.0
+	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.17.0
 	golang.org/x/vuln v1.0.1
 )

@@ -1,0 +1,28 @@
+package main
+
+import (
+	"context"
+	"flag"
+	"fmt"
+	"log"
+)
+
+func main() {
+	var about bool
+	flag.BoolVar(&about, "about", false, "know about this command")
+	flag.Parse()
+
+	if about {
+		fmt.Println("Template description of command")
+		return
+	}
+
+	ctx := context.Background()
+	if err := run(ctx); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func run(ctx context.Context) error {
+	return nil
+}

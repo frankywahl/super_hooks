@@ -1,10 +1,24 @@
 package cmd
 
 import (
-	"fmt"
+	"io"
+	"os"
 
+	"github.com/frankywahl/super_hooks/internal/templates"
 	"github.com/spf13/cobra"
 )
+
+func printFile(dst io.Writer, file string) error {
+	f, err := templates.Assets.Open(file)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	if _, err := io.Copy(os.Stdout, f); err != nil {
+		return err
+	}
+	return nil
+}
 
 func newCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -26,13 +40,7 @@ func newBashCmd() *cobra.Command {
 		Short: "Bash template for hooks command",
 		Long:  "Bash template output to standard out",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fmt.Printf(`#!/usr/bin/env bash
-if [ "${1}" == "--about" ]; then
-	echo "Template description of command"
-	exit 0
-fi
-`)
-			return nil
+			return printFile(os.Stdout, "bash")
 		},
 	}
 
@@ -45,36 +53,7 @@ func newGoCmd() *cobra.Command {
 		Short: "Go template for hooks command",
 		Long:  "Go template output to standard out",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fmt.Printf(`package main
-
-import (
-	"context"
-	"flag"
-	"fmt"
-	"log"
-)
-
-func main() {
-	var about bool
-	flag.BoolVar(&about, "about", false, "know about this command")
-	flag.Parse()
-
-	if about {
-		fmt.Println("Describe command here")
-		return
-	}
-
-	ctx := context.Background()
-	if err := run(ctx); err != nil {
-		log.Fatal(err)
-	}
-}
-
-func run(ctx context.Context) error {
-	return nil
-}
-`)
-			return nil
+			return printFile(os.Stdout, "go")
 		},
 	}
 

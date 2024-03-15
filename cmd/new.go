@@ -28,7 +28,7 @@ func newBashCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			fmt.Printf(`#!/usr/bin/env bash
 if [ "${1}" == "--about" ]; then
-	echo "Template Descriptiont of command"
+	echo "Template description of command"
 	exit 0
 fi
 `)

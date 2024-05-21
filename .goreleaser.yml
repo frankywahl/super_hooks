@@ -51,10 +51,10 @@ changelog:
 brews:
 -
   name: super_hooks
-  folder: Formula
+  directory: Formula
   homepage: "http://github.com/frankywahl/super_hooks"
   description: "Hooks handling for git"
-  tap:
+  repository:
     owner: frankywahl
     name: homebrew-tap
 

@@ -58,7 +58,7 @@ fmt: ## Run fmt on go files
 
 .PHONY: gorelease
 gorelease: ## Build a release locally. This will not be published
-	SOURCE=$(shell hostname) $(GORELEASER) release --clean --snapshot --skip-publish
+	SOURCE=$(shell hostname) $(GORELEASER) release --clean --snapshot --skip=publish
 
 .PHONY: help
 help: ## Show this help

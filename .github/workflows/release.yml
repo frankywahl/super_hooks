@@ -9,20 +9,14 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.19
-
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: actions/cache@v4
+      - name: Install Go
+        uses: actions/setup-go@v5
         with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+          go-version-file: go.mod
+          cache: true
 
       - name: Download dependencies
         run: |
@@ -32,7 +26,7 @@ jobs:
       - name: Login Github Container Registry
         run: echo "${{ secrets.GORELEASER_GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Set SOURCE Environment
+      - name: Set SOURCE Environment variable
         run: |
           echo 'SOURCE<<EOF' >> $GITHUB_ENV
           echo ${GITHUB_SERVER_URL}/${{ github.repository }} >> $GITHUB_ENV

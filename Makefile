@@ -20,9 +20,9 @@ ifeq ($(DOCKER), true)
 	GO=docker run --rm --volume $(shell pwd):/app --workdir /app golang:latest go
 	GOLINT=docker run --rm --volume $(shell pwd):/app --workdir /app golangci/golangci-lint:latest golangci-lint
 	GORELEASER=docker run --rm --privileged \
-		--volume $(shell pwd):/go/src/github.com/frankywahl/allowed-signers \
+		--volume $(shell pwd):/go/src/github.com/frankywahl/super_hooks \
 		--volume /var/run/docker.sock:/var/run/docker.sock \
-		--workdir /go/src/github.com/frankywahl/allowed-signers \
+		--workdir /go/src/github.com/frankywahl/super_hooks \
 		--env GITHUB_TOKEN=${GITHUB_TOKEN} \
 		--env SOURCE=${SOURCE} \
 		goreleaser/goreleaser

@@ -95,7 +95,7 @@ super_hooks install --help
 ```
 
 ## Code Status
-![](https://github.com/frankywahl/super_hooks/workflows/Run%20tests/badge.svg?branch=main)
+[![Run tests](https://github.com/frankywahl/super_hooks/actions/workflows/ci.yml/badge.svg)](https://github.com/frankywahl/super_hooks/actions/workflows/ci.yml)
 
 ## Contributing
 

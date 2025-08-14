@@ -1,6 +1,6 @@
 module github.com/frankywahl/super_hooks
 
-go 1.24
+go 1.25
 
 require (
 	github.com/spf13/cobra v1.9.1

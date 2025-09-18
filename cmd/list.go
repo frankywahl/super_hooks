@@ -50,21 +50,21 @@ type hook struct {
 
 			for _, h := range hook.List {
 				for _, cmd := range hook.For(h) {
-					wg.Add(1)
-					go func(cmd *exec.Cmd, h string) {
-						defer wg.Done()
-						ch := customHook{
-							Kind: h,
-							Path: cmd.Args[0],
-						}
-						cmd.Stdout = &ch
-						cmd.Args = append(cmd.Args, "--about")
-						if err := cmd.Run(); err != nil {
-							fmt.Printf("error when running: %v", err)
-							return
-						}
-						hooks <- ch
-					}(cmd, h)
+					wg.Go(func() {
+						func(cmd *exec.Cmd, h string) {
+							ch := customHook{
+								Kind: h,
+								Path: cmd.Args[0],
+							}
+							cmd.Stdout = &ch
+							cmd.Args = append(cmd.Args, "--about")
+							if err := cmd.Run(); err != nil {
+								fmt.Printf("error when running: %v", err)
+								return
+							}
+							hooks <- ch
+						}(cmd, h)
+					})
 				}
 			}
 			go func() {

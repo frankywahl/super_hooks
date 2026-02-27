@@ -1,6 +1,7 @@
 package hook_test
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/frankywahl/super_hooks/hook"
@@ -26,17 +27,8 @@ func TestList(t *testing.T) {
 	}
 
 	for _, h := range hooks {
-		if !hasElement(hook.List, h) {
+		if !slices.Contains(hook.List, h) {
 			t.Errorf("Error expected to have a hook for %+v", h)
 		}
 	}
-}
-
-func hasElement(list []string, word string) bool {
-	for _, element := range list {
-		if element == word {
-			return true
-		}
-	}
-	return false
 }

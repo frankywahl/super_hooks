@@ -22,7 +22,7 @@ func newVersionCmd() *cobra.Command {
 	format := `{{ . | json }}`
 
 	funcMap := template.FuncMap{
-		"json": func(i interface{}) (string, error) {
+		"json": func(i any) (string, error) {
 			b, err := json.Marshal(i)
 			if err != nil {
 				return "", fmt.Errorf("could not marshal data: %w", err)

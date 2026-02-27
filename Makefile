@@ -54,7 +54,7 @@ docker: ## Build a docker image
 
 .PHONY: fmt
 fmt: ## Run fmt on go files
-	@test -z $(shell $(GO) fmt $$($(GO) list ./... | grep -v /vendor/)) || (echo "Unsucsessfull format - files changed" && exit 1) # This will return non-0 if unsuccessful  run `go fmt ./...` to fix
+	@diff=$$($(GO) fmt $$($(GO) list ./... | grep -v /vendor/)); test -z "$$diff" || (echo "Unsuccessful format - files changed:" && echo "$$diff" && exit 1) # This will return non-0 if unsuccessful  run `go fmt ./...` to fix
 
 .PHONY: gorelease
 gorelease: ## Build a release locally. This will not be published

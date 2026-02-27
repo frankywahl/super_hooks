@@ -56,6 +56,10 @@ docker: ## Build a docker image
 fmt: ## Run fmt on go files
 	@diff=$$($(GO) fmt $$($(GO) list ./... | grep -v /vendor/)); test -z "$$diff" || (echo "Unsuccessful format - files changed:" && echo "$$diff" && exit 1) # This will return non-0 if unsuccessful  run `go fmt ./...` to fix
 
+.PHONY: fix
+fix: ## Run fix on go files
+	@$(GO) fix ./... && test -z "$$(git diff -- '*.go')" || (echo "Unsuccessful fix - files changed:" && git diff -- '*.go' && exit 1)
+
 .PHONY: gorelease
 gorelease: ## Build a release locally. This will not be published
 	SOURCE=$(shell hostname) $(GORELEASER) release --clean --snapshot --skip=publish

@@ -38,6 +38,10 @@ jobs:
         if: matrix.platform == 'ubuntu-latest'
         run: make fmt
 
+      - name: fix
+        if: matrix.platform == 'ubuntu-latest'
+        run: make fix
+
       - name: Vulnerabilty Test
         if: matrix.platform == 'ubuntu-latest'
         run: make vulncheck

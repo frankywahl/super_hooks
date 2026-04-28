@@ -38,4 +38,4 @@ jobs:
         uses: goreleaser/goreleaser-action@v7
         with:
           version: latest
-          args: release --rm-dist
+          args: release --clean

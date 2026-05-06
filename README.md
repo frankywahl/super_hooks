@@ -5,6 +5,9 @@ It allows you to decouple the hooks you use from the projects you use them in by
 
 Hooks folders are defined in the git config under `superhooks.path`
 
+> [!IMPORTANT]
+> Since [Git 2.54](https://git-scm.com/docs/git-hook/2.54.0) the functionality offered by this tool is built into git.
+
 ## Usage
 
 <details>

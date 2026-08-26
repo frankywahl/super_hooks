@@ -75,6 +75,10 @@ help: ## Show this help
 install: ## Install the binary on the machine
 	$(GO) build ${LDFLAGS} -o ${GOPATH}/bin/${BINARY} *.go
 
+.PHONY: lint
+lint: # Run the linter
+	$(GOLINT) run --config .github/golangci.yml --verbose
+
 .PHONY: test
 test: ## Run the test suite
 	$(GO) test -v --race -count=1 ./... 2>&1 | tee ${TEST_REPORT} ;
@@ -90,3 +94,4 @@ vet: ## Run vet on go files
 .PHONY: vulncheck
 vulncheck: ## Run vulnerability scanner check
 	$(GO) run golang.org/x/vuln/cmd/govulncheck ./...
+

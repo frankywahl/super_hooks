@@ -1,0 +1,23 @@
+version: 2
+
+output:
+  formats:
+    text:
+      path: stdout
+      color: true
+
+linters:
+  settings:
+    errcheck:
+      exclude-functions:
+        - fmt.Fprintf
+        - fmt.Fprintln
+        - (io/fs.File).Close
+        - (*os.File).Close
+
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - goimports
+    - gofumpt

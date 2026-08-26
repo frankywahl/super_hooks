@@ -67,7 +67,7 @@ fi
 				panic(err)
 			}
 			defer file.Close()
-			file.Chmod(0755)
+			file.Chmod(0o755)
 
 			if Verbose {
 				fmt.Printf("Writing new file %s\n", fileName)

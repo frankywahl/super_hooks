@@ -59,7 +59,7 @@ func For(hookName string) []*exec.Cmd {
 }
 
 func isExecutable(f os.FileInfo) bool {
-	return (f.Mode() & 0111) != 0
+	return (f.Mode() & 0o111) != 0
 }
 
 func allPath() []string {

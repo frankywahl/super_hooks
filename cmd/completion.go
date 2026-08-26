@@ -18,7 +18,6 @@ func newCompletionCommand() *cobra.Command {
 		bashCmd,
 	)
 	return completionCmd
-
 }
 
 // zshCmd represents the zsh completion command

@@ -93,5 +93,5 @@ vet: ## Run vet on go files
 
 .PHONY: vulncheck
 vulncheck: ## Run vulnerability scanner check
-	$(GO) run golang.org/x/vuln/cmd/govulncheck ./...
+	$(GO) tool govulncheck ./...
 

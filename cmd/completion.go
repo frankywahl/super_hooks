@@ -47,7 +47,9 @@ To load completion run
 To configure your bash shell to load completions for each session add to your bashrc
 %s completion bash >> ~/.bashrc`, os.Args[0], os.Args[0]),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		cmd.GenBashCompletion(os.Stdout)
+		if err := cmd.GenBashCompletion(os.Stdout); err != nil {
+			return err
+		}
 		return nil
 	},
 }

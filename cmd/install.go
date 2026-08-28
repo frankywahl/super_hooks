@@ -67,12 +67,16 @@ fi
 				panic(err)
 			}
 			defer file.Close()
-			file.Chmod(0o755)
+			if err := file.Chmod(0o755); err != nil {
+				return fmt.Errorf("could not change file %v permissions: %w", file, err)
+			}
 
 			if Verbose {
 				fmt.Printf("Writing new file %s\n", fileName)
 			}
-			err = tmpl.Execute(file, data)
+			if err := tmpl.Execute(file, data); err != nil {
+				return fmt.Errorf("could not execute template: %w", err)
+			}
 		}
 		fmt.Println("Super Hooks installed successfully")
 		return nil

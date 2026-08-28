@@ -93,7 +93,9 @@ func printHooks(hooks <-chan customHook, format string) error {
 			return fmt.Errorf("could not create template: %w", err)
 		}
 		for cmd := range hooks {
-			tpl.Execute(os.Stdout, cmd)
+			if err := tpl.Execute(os.Stdout, cmd); err != nil {
+				return fmt.Errorf("could not run template: %w", err)
+			}
 			fmt.Fprintln(os.Stdout)
 		}
 	}

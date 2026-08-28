@@ -47,12 +47,14 @@ func For(hookName string) []*exec.Cmd {
 				fmt.Println("Unhandled error")
 			}
 		} else {
-			filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
+			if err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 				if !f.IsDir() && isExecutable(f) {
 					cmds = append(cmds, exec.Command(path))
 				}
 				return nil
-			})
+			}); err != nil {
+				fmt.Println("error walking tree")
+			}
 		}
 	}
 	return cmds

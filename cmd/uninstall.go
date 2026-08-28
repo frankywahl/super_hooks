@@ -26,7 +26,7 @@ var uninstallCmd = &cobra.Command{
 			destinationDir := filepath.Join(folder, ".git", "hooks.back")
 			directoryExists, _ := exists(destinationDir)
 			if !directoryExists {
-				return errors.New("Super hooks is not installed")
+				return errors.New("super_hooks is not installed")
 			}
 			if Verbose {
 				fmt.Printf("Removing %s\n", destinationDir)
@@ -41,7 +41,7 @@ var uninstallCmd = &cobra.Command{
 				fmt.Println(err)
 			}
 		}
-		fmt.Println("Super Hooks uninstalled successfully")
+		fmt.Println("super_hooks uninstalled successfully")
 		return nil
 	},
 }
